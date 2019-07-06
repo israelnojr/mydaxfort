@@ -1,99 +1,45 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('frontend.layout')
+@section('content')
 
-        <title>Laravel</title>
+  <!--================Home Banner Area =================-->
+  <section class="home_banner_area mb-40">
+    @include('frontend.sections.homebanner')
+  </section>
+  <!--================End Home Banner Area =================-->
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+  <!-- Start feature Area -->
+  <section class="feature-area section_gap_bottom_custom">
+    @include('frontend.sections.featurearea')
+  </section>
+  <!-- End feature Area -->
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+  <!--================ Feature Product Area =================-->
+  <section class="feature_product_area section_gap_bottom_custom">
+    @include('frontend.sections.featuredproducts')
+  </section>
+  <!--================ End Feature Product Area =================-->
 
-            .full-height {
-                height: 100vh;
-            }
+  <!--================ Offer Area =================-->
+  <section class="offer_area">
+    @include('frontend.sections.offerarea')
+  </section>
+  <!--================ End Offer Area =================-->
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+  <!--================ New Product Area =================-->
+  <section class="new_product_area section_gap_top section_gap_bottom_custom">
+   @include('frontend.sections.newproductarea')
+  </section>
+  <!--================ End New Product Area =================-->
 
-            .position-ref {
-                position: relative;
-            }
+  <!--================ Inspired Product Area =================-->
+  <section class="inspired_product_area section_gap_bottom_custom">
+   @include('frontend.sections.inspiredproductarea')
+  </section>
+  <!--================ End Inspired Product Area =================-->
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+  <!--================ Start Blog Area =================-->
+  <section class="blog-area section-gap">
+    @include('frontend.sections.blogarea')
+  </section>
+  <!--================ End Blog Area =================-->
+@endsection
