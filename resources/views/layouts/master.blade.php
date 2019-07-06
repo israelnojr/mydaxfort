@@ -18,11 +18,11 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="{{route('dashboard')}}" class="logo">
+    <a href="{{('/')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>Ad</b>min</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>Dashboard</span>
+      <span class="logo-lg"><b>Admin</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -45,7 +45,7 @@
                   <img src="{{asset('images/adminlte.jpg')}}" class="rounded-circle" alt="User Image">
 
                   <p>
-                    {{Auth::user()->name}} - Web Developer
+                    {{Auth::user()->name}} -  {{Auth::user()->type}}
                     <small>Member since {{Auth::user()->created_at->toFormattedDateString()}}</small>
                   </p>
                 </li>
@@ -129,17 +129,24 @@
           </ul>
         </li>  
         
-        <li>
-          <a href="../mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
-            <span class="pull-right-container">
-              <small class="badge badge-warning pull-right ">12</small>
-              <small class="badge badge-success pull-right ">16</small>
-              <small class="badge badge-danger pull-right ">5</small>
-            </span>
-          </a>
-        </li>
-      
+        <li class="">
+          <router-link to="/product">
+            <i class="fa fa-th"></i> <span>Products</span>
+              <span class="pull-right-container">
+              
+              </span>
+          </router-link>
+        </li>  
+
+        <li class="">
+          <router-link to="/category">
+            <i class="fa fa-th"></i> <span>Categories</span>
+              <span class="pull-right-container">
+              
+              </span>
+          </router-link>
+        </li>  
+
         <li class="">
           <router-link to="/developer">
             <i class="fab fa-connectdevelop"></i> <span>Developer</span>

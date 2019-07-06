@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use auth;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+      return  Category::all();
     }
 
     /**
@@ -25,7 +27,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' =>  ['required', 'string', 'unique:categories'],
+            'desc' => [ 'required', 'string', 'max:50'],
+        ]);
+    
+        $slug = str_slug($request->name);
+        
+        return Category::create([
+            'user_id' => auth::id(),
+            'name' => $request['name'],
+            'desc' => $request['desc'],
+            'slug' => $slug,
+            'username' => auth::user()->name,
+        ]);
     }
 
     /**
@@ -48,7 +63,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $this->validate($request, [
+            'name' => [ 'required', 'max:191', 'unique:categories,name,'.$category->id],
+            'desc' =>  [ 'required'],
+        ]);
+
+        $category->update($request->all());
+        return ['message' => 'upate category'];
     }
 
     /**
@@ -59,6 +81,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return ['message' => 'Category Deleted'];
     }
 }

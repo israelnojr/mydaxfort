@@ -46,6 +46,14 @@ let routes = [
     
     { 
       path: '/developer', name: 'developer', component: require('./components/Developer.vue').default  
+    },
+
+    { 
+      path: '/product', name: 'product', component: require('./components/Product.vue').default  
+    },
+
+    { 
+      path: '/category', name: 'category', component: require('./components/Category.vue').default  
     }
   ]
 

@@ -66,12 +66,12 @@ class ProfileController extends Controller
     {
         $authUser =  auth('api')->user()->profile;
 
-        // $this->validate($request, [
-        //     'name' =>  ['required', 'string'],
-        //     'email' => [ 'required', 'email', 'unique:profiles,email,'.$authUser->id],
-        //     'description' =>  ['required', 'string', 'mix:250'],
-        //     'password'  => ['sometimes','string', 'min:6'],
-        // ]);
+        $this->validate($request, [
+            'name' =>  ['required', 'string'],
+            'email' => [ 'required', 'email', 'unique:profiles,email,'.$authUser->id],
+            'description' =>  ['required', 'string', 'mix:250'],
+            'password'  => ['sometimes','string', 'min:6'],
+        ]);
 
         $currentImage = $authUser->image;
         if($request->image != $currentImage){

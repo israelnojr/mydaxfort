@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex align-item-center justify-content-between">
-                    <h3 class="card-title">Users Table</h3>
+                    <h3 class="card-title">Products Table</h3>
 
                     <div class="card-tools float-right">
                         <button class="btn btn-success" @click="createModal" >Add New <i class="fas fa-user-plus fa-fw"></i></button>
@@ -16,25 +16,31 @@
                     <tbody>
                         <tr>
                             <th>ID</th>
+                            <th>User Name</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Type</th>
+                            <th>Short Description</th>
+                            <th>Status</th>
+                            <th>Price</th>
+                            <!-- <th>Image</th> -->
                             <th>Registered At</th>
                             <th>Modify</th>
                         </tr>
  
-                        <tr v-for=" user in users" :key="user.id" >
-                            <td>{{user.id}}</td>
-                            <td>{{user.name | upText}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.type | upText}}</td>
-                            <td>{{user.created_at | myDate}}</td>
+                        <tr v-for=" product in products" :key="product.id" >
+                            <td>{{product.id}}</td>
+                            <td>{{product.username}}</td>
+                            <td>{{product.name | upText}}</td>
+                            <td>{{product.short_desc}}</td>
+                            <td>{{product.status}}</td>
+                            <td>{{product.price}}</td>
+                            <!-- <td><img src="images/product/{{product.image}}"></td> -->
+                            <td>{{product.created_at | myDate}}</td>
                             <td>
-                                <a class="btn btn-info" href="#" @click="editModal(user)">
+                                <a class="btn btn-info" href="#" @click="editModal(product)">
                                     <i class="fa fa-edit blue"></i>
                                 </a>
                                 
-                                <button class="btn btn-danger" href="#" @click="deleteUser(user.id)">
+                                <button class="btn btn-danger" href="#" @click="deleteProduct(product.id)">
                                     <i class="fa fa-trash red"></i>
                                 </button>
                             </td>
@@ -51,13 +57,21 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" v-show="!editMode"  id="AddNewLabel">Add New</h5>
-                        <h5 class="modal-title" v-show="editMode"  id="AddNewLabel">Edit User</h5>
+                        <h5 class="modal-title" v-show="editMode"  id="AddNewLabel">Edit Product</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent=" editMode ? updateUser() : createUser() ">
+                    <form @submit.prevent=" editMode ? updateProduct() : createProduct() ">
                         <div class="modal-body">
+                            <div class="form-group">
+                                <select name="category_id" v-model="form.category_id" id="category_id" @click="loadCategory" class="form-control" :class="{ 'is-invalid': form.errors.has('category_id') }">
+                                    <option value="">Select Product Category</option>
+                                     <option v-for="category in categories" :key="category.id" v-bind:value="category.id">{{category.name}}</option>
+                                </select>
+                                <has-error :form="form" field="category_id"></has-error>
+                            </div>
+
                             <div class="form-group">
                                 <input v-model="form.name" type="text" name="name"
                                     placeholder="Name"
@@ -66,32 +80,37 @@
                             </div>
 
                             <div class="form-group">
-                                <input v-model="form.email" type="text" name="email"
-                                    placeholder="Email"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
-                                <has-error :form="form" field="email"></has-error>
+                                <textarea v-model="form.short_desc" type="text" name="short_desc"
+                                    placeholder="Short Description"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }">
+                                <has-error :form="form" field="short_desc"></has-error></textarea>
                             </div>
+
                             <div class="form-group">
-                                <select name="type" v-model="form.type" id="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
-                                    <option value="">Select User Role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="user">Standard User</option>
-                                    <option value="author">Author</option>
-                                     <option value="developer">Developer</option>
-                                </select>
-                                <has-error :form="form" field="type"></has-error>
+                                <textarea v-model="form.long_desc" type="text" name="long_desc"
+                                    placeholder="Long Description"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('long_desc') }">
+                                <has-error :form="form" field="long_desc"></has-error></textarea>
                             </div>
+                
                             <div class="form-group">
-                                <input v-model="form.password" type="text" name="password"
-                                    placeholder="Password"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
-                                <has-error :form="form" field="password"></has-error>
+                                <input v-model="form.price" type="number" name="price"
+                                    placeholder="price"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('price') }">
+                                <has-error :form="form" field="price"></has-error>
+                            </div>
+
+                             <div class="form-group">
+                                <input type="file" @change="imgUpload" name="image"
+                                    placeholder="image"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                <has-error :form="form" field="image"></has-error>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             <button v-show="editMode" type="submit" class="btn btn-success">Update</button>
-                            <button v-show="!editMode" type="submit" class="btn btn-primary">Add User</button>
+                            <button v-show="!editMode" type="submit" class="btn btn-primary">Add Product</button>
                         </div>
                     </form>
             </div>
@@ -106,20 +125,23 @@
         data(){
             return{
                 editMode: false,
-                users: {},
+                products: {},
+                categories: {},
                 form: new Form({
                     id:'',
+                    category_id:'',
                     name : '',
-                    email: '',
-                    password: '',
-                    type: '',
+                    short_desc: '',
+                    long_desc: '',
+                    price: '',
+                    image: ''
                 })
             }
         },
         methods: {
-            updateUser(){
+            updateProduct(){
                 this.$Progress.start()
-                this.form.put('api/user/'+this.form.id)
+                this.form.put('api/product/'+this.form.id)
 
                 .then(() => {
                     // hide modal
@@ -127,7 +149,7 @@
                     // show success message
                     swal.fire(
                     'Updated!',
-                    'User details updated successfully',
+                    'Product details updated successfully',
                     'success'
                     )  
                      this.$Progress.finish()
@@ -140,11 +162,11 @@
                 // alert('Edit data')
             },
 
-            editModal(user){
+            editModal(product){
                 this.editMode = true;
                 this.form.reset();
                 $('#AddNew').modal('show')
-                this.form.fill(user);
+                this.form.fill(product);
             },
 
             createModal(){
@@ -153,7 +175,7 @@
                 $('#AddNew').modal('show')
             },
 
-            deleteUser(id){
+            deleteProduct(id){
                 swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -166,10 +188,10 @@
 
                     //send request to the server
                     if (result.value) {
-                        this.form.delete('api/user/'+id).then(() => {                     
+                        this.form.delete('api/product/'+id).then(() => {                     
                             swal.fire(
                             'Deleted!',
-                            'User deleted.',
+                            'Product deleted.',
                             'success'
                             )                     
                         }).catch(()=>{
@@ -179,32 +201,58 @@
                 })
             },
 
-            loadUsers(){
-                axios.get("api/user").then(({ data })=> (this.users = data));
+            loadProduct(){
+                axios.get("api/product").then(({ data })=> (this.products = data));
             },
 
-            createUser(){
+             loadCategory(){
+                axios.get("api/category").then(({ data })=> (this.categories = data));
+            },
+
+            imgUpload(e){
+            let file = e.target.files[0];
+            console.log(file);
+            let reader = new FileReader();
+            
+            if(file['size'] < 2111775){
+                  reader.onloadend = (file) => {
+                  this.form.image = reader.result;
+                }
+                reader.readAsDataURL(file);
+              } else{
+                swal.fire(
+                    'Oops...',
+                    'You are uploading a large file',
+                    'error'
+                    )  
+              
+              return false;
+              }
+            },
+
+            createProduct(){
                 this.$Progress.start()
-                this.form.post('api/user')
+                this.form.post('api/product')
 
                 .then(() =>{
                     // Fire.$emit('afterCreated');
                     $('#AddNew').modal('hide')
                     toast.fire({
                     type: 'success',
-                    title: 'User Created Successfully'
+                    title: 'Product Created Successfully'
                     })
                 this.$Progress.finish()
                 })
                 .catch(() =>{
-
+                     this.$Progress.fail()
                 })
             }
+
         },
-        created(){
-            this.loadUsers();
+            created(){
+            this.loadProduct();
             // Fire.$on('afterCreated', () => { this.loadUsers(); })
-            setInterval(() => this.loadUsers(), 3000);
+            setInterval(() => this.loadProduct(), 3000);
         }
     }
 </script>

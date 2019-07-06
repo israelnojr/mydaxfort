@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware'=>'auth:api'], function (){
     Route::apiResources(['user' => 'API\UserController']);
+    Route::apiResources(['product' => 'API\ProductController']);
+    Route::apiResources(['category' => 'API\CategoryController']);
     Route::get('profile', 'API\ProfileController@setting');
     Route::put('profile', 'API\ProfileController@update');
 });

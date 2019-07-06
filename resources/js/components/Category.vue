@@ -17,24 +17,28 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Type</th>
+                           <th>User Name</th>
+                            <th>Slug</th>
+                            <th>Description</th>
+                            <th>Status</th>
                             <th>Registered At</th>
                             <th>Modify</th>
                         </tr>
  
-                        <tr v-for=" user in users" :key="user.id" >
-                            <td>{{user.id}}</td>
-                            <td>{{user.name | upText}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.type | upText}}</td>
-                            <td>{{user.created_at | myDate}}</td>
+                        <tr v-for=" category in categories" :key="category.id" >
+                            <td>{{category.id}}</td>
+                            <td>{{category.name | upText}}</td>
+                            <td>{{category.username | upText}}</td>
+                            <td>{{category.slug}}</td>
+                            <td>{{category.desc}}</td>
+                            <td>{{category.status}}</td>
+                            <td>{{category.created_at | myDate}}</td>
                             <td>
-                                <a class="btn btn-info" href="#" @click="editModal(user)">
+                                <a class="btn btn-info" href="#" @click="editModal(category)">
                                     <i class="fa fa-edit blue"></i>
                                 </a>
                                 
-                                <button class="btn btn-danger" href="#" @click="deleteUser(user.id)">
+                                <button class="btn btn-danger" href="#" @click="deleteCategory(category.id)">
                                     <i class="fa fa-trash red"></i>
                                 </button>
                             </td>
@@ -56,7 +60,7 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent=" editMode ? updateUser() : createUser() ">
+                    <form @submit.prevent=" editMode ? updateCategory() : createCategory() ">
                         <div class="modal-body">
                             <div class="form-group">
                                 <input v-model="form.name" type="text" name="name"
@@ -66,32 +70,16 @@
                             </div>
 
                             <div class="form-group">
-                                <input v-model="form.email" type="text" name="email"
-                                    placeholder="Email"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
-                                <has-error :form="form" field="email"></has-error>
-                            </div>
-                            <div class="form-group">
-                                <select name="type" v-model="form.type" id="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
-                                    <option value="">Select User Role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="user">Standard User</option>
-                                    <option value="author">Author</option>
-                                     <option value="developer">Developer</option>
-                                </select>
-                                <has-error :form="form" field="type"></has-error>
-                            </div>
-                            <div class="form-group">
-                                <input v-model="form.password" type="text" name="password"
-                                    placeholder="Password"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
-                                <has-error :form="form" field="password"></has-error>
+                                <textarea v-model="form.desc" type="text" name="desc"
+                                    placeholder="Description"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('desc') }">
+                                <has-error :form="form" field="desc"></has-error></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             <button v-show="editMode" type="submit" class="btn btn-success">Update</button>
-                            <button v-show="!editMode" type="submit" class="btn btn-primary">Add User</button>
+                            <button v-show="!editMode" type="submit" class="btn btn-primary">Add Category</button>
                         </div>
                     </form>
             </div>
@@ -106,20 +94,18 @@
         data(){
             return{
                 editMode: false,
-                users: {},
+                categories: {},
                 form: new Form({
                     id:'',
                     name : '',
-                    email: '',
-                    password: '',
-                    type: '',
+                    desc: '',
                 })
             }
         },
         methods: {
-            updateUser(){
+            updateCategory(){
                 this.$Progress.start()
-                this.form.put('api/user/'+this.form.id)
+                this.form.put('api/category/'+this.form.id)
 
                 .then(() => {
                     // hide modal
@@ -127,7 +113,7 @@
                     // show success message
                     swal.fire(
                     'Updated!',
-                    'User details updated successfully',
+                    'Category details updated successfully',
                     'success'
                     )  
                      this.$Progress.finish()
@@ -140,11 +126,11 @@
                 // alert('Edit data')
             },
 
-            editModal(user){
+            editModal(category){
                 this.editMode = true;
                 this.form.reset();
                 $('#AddNew').modal('show')
-                this.form.fill(user);
+                this.form.fill(category);
             },
 
             createModal(){
@@ -153,7 +139,7 @@
                 $('#AddNew').modal('show')
             },
 
-            deleteUser(id){
+            deleteCategory(id){
                 swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -166,10 +152,10 @@
 
                     //send request to the server
                     if (result.value) {
-                        this.form.delete('api/user/'+id).then(() => {                     
+                        this.form.delete('api/category/'+id).then(() => {                     
                             swal.fire(
                             'Deleted!',
-                            'User deleted.',
+                            'category deleted.',
                             'success'
                             )                     
                         }).catch(()=>{
@@ -179,32 +165,32 @@
                 })
             },
 
-            loadUsers(){
-                axios.get("api/user").then(({ data })=> (this.users = data));
+            loadCategory(){
+                axios.get("api/category").then(({ data })=> (this.categories = data));
             },
 
-            createUser(){
+            createCategory(){
                 this.$Progress.start()
-                this.form.post('api/user')
+                this.form.post('api/category')
 
                 .then(() =>{
                     // Fire.$emit('afterCreated');
                     $('#AddNew').modal('hide')
                     toast.fire({
                     type: 'success',
-                    title: 'User Created Successfully'
+                    title: 'Category Created Successfully'
                     })
                 this.$Progress.finish()
                 })
                 .catch(() =>{
-
+                     this.$Progress.fail()
                 })
             }
         },
         created(){
-            this.loadUsers();
+            this.loadCategory();
             // Fire.$on('afterCreated', () => { this.loadUsers(); })
-            setInterval(() => this.loadUsers(), 3000);
+            setInterval(() => this.loadCategory(), 3000);
         }
     }
 </script>

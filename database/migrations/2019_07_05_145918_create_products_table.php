@@ -16,6 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('username');
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->text('short_desc');
@@ -23,9 +25,10 @@ class CreateProductsTable extends Migration
             $table->float('price');
             $table->string('image');
             $table->boolean('status')->default(1);
+            $table->timestamps();
 
             $table->index('category_id');
-            $table->timestamps();
+            $table->index('user_id');
         });
     }
 
