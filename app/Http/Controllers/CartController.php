@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('frontend.pages.category', compact('categories'));
+        return view('frontend.pages.cart');
     }
 
     /**

@@ -12,7 +12,7 @@
         <div class="col-lg-6">
         @foreach($productAd as $product)
             <div class="new_product">
-                <h5 class="text-uppercase">Category name to be here</h5>
+                <h5 class="text-uppercase">{{$product->category->name}}</h5>
                 <h3 class="text-uppercase">{{$product->name}}</h3>
                 <div class="product-img">
                 <img class="img-fluid" src="{{asset('images/product/'.$product->image)}}" alt="" />

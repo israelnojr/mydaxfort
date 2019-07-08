@@ -80,6 +80,7 @@
   <script src="{{asset('frontend/vendors/isotope/isotope-min.js')}}"></script>
   <script src="{{asset('frontend/vendors/owl-carousel/owl.carousel.min.js')}}"></script>
   <script src="{{asset('frontend/js/jquery.ajaxchimp.min.js')}}"></script>
+  <script src="{{asset('frontend/vendors/jquery-ui/jquery-ui.js')}}"></script>
   <script src="{{asset('frontend/vendors/counter-up/jquery.waypoints.min.js')}}"></script>
   <script src="{{asset('frontend/vendors/counter-up/jquery.counterup.js')}}"></script>
   <script src="{{asset('frontend/js/mail-script.js')}}"></script>

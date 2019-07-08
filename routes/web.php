@@ -11,11 +11,13 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', 'WelcomeController@index')->name('welcome');
-// Route::get('/products', 'ProductController@index')->name('products');
+Route::get('/category', 'CategoryController@index')->name('category');
+Route::get('/cart', 'CartController@index')->name('cart');
+Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+
+
+
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');

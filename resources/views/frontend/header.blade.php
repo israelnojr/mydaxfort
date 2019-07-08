@@ -55,16 +55,16 @@
                       aria-expanded="false">Shop</a>
                     <ul class="dropdown-menu">
                       <li class="nav-item">
-                        <a class="nav-link" href="category.html">Shop Category</a>
+                        <a class="nav-link" href="{{route('category')}}">Shop Category</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="single-product.html">Product Details</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="checkout.html">Product Checkout</a>
+                        <a class="nav-link" href="{{route('checkout')}}">Checkout</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="cart.html">Shopping Cart</a>
+                        <a class="nav-link" href="{{route('cart')}}">Shopping Cart</a>
                       </li>
                     </ul>
                   </li>
