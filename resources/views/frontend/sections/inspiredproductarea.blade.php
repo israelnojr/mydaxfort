@@ -15,7 +15,7 @@
               <div class="product-img">
                 <img class="img-fluid w-100" src="{{asset('images/product/'.$product->image)}}" alt="" />
                 <div class="p_icon">
-                  <a href="#">
+                  <a href="{{route('product.show',$product->slug)}}">
                     <i class="ti-eye"></i>
                   </a>
                   <a href="#">

@@ -15,6 +15,7 @@ Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/category', 'CategoryController@index')->name('category');
 Route::get('/cart', 'CartController@index')->name('cart');
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+Route::get('/{product}/slug', 'ProductController@show')->name('product.show');
 
 
 
