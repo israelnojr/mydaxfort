@@ -63,7 +63,7 @@
                         name="qty"
                         id="sst"
                         maxlength="12"
-                        value="1"
+                        value="{{$product->qty}}"
                         title="Quantity:"
                         class="input-text qty"
                       />

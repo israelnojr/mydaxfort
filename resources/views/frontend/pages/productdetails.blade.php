@@ -112,7 +112,7 @@
                   name="qty"
                   id="sst"
                   maxlength="12"
-                  value="1"
+                 
                   title="Quantity:"
                   class="input-text qty"
                 />
