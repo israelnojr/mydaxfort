@@ -15,10 +15,17 @@
                 <h5 class="text-uppercase">{{$product->category->name}}</h5>
                 <h3 class="text-uppercase">{{$product->name}}</h3>
                 <div class="product-img">
-                <img class="img-fluid" src="{{asset('images/product/'.$product->image)}}" alt="" />
+                <img class="img-fluid" src="{{asset('images/product/'.$product->image)}}" alt="{{$product->slug}}" style=" width:100%; height: 300px;"/>
             </div>
                 <h4>${{$product->price}}</h4>
-                <a href="#" class="main_btn">Add to cart</a>
+                <form action="{{route('cart.store')}}" method="post">
+                    @csrf()
+                    <input type="hidden" name="id" value="{{$product->id}}">
+                    <input type="hidden" name="name" value="{{$product->name}}">
+                    <input type="hidden" name="price" value="{{$product->price}}">
+                    <input type="hidden" name="qty" value="1">
+                    <button class="main_btn">Add to Cart</button>
+                </form>
             </div>
         @endforeach
         </div>
@@ -29,15 +36,13 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="single-product">
                     <div class="product-img">
-                        <img class="img-fluid w-100" src="{{asset('images/product/'.$product->image)}}" alt="" />
+                        <img class="img-fluid w-100" src="{{asset('images/product/'.$product->image)}}" alt="{{$product->slug}}" style="height: 250px;" />
                         <div class="p_icon">
                         <a href="{{route('product.show',$product->slug)}}">
                             <i class="ti-eye"></i>
                         </a>
-                        <a href="#">
-                            <i class="ti-heart"></i>
-                        </a>
-                        <a href="#">
+                       
+                        <a href="{{route('product.show',$product->slug)}}">
                             <i class="ti-shopping-cart"></i>
                         </a>
                         </div>

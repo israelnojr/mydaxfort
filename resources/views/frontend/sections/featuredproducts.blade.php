@@ -13,15 +13,13 @@
           <div class="col-lg-4 col-md-6">
             <div class="single-product">
               <div class="product-img">
-                <img class="img-fluid w-100" src="{{asset('images/product/'.$product->image)}}" alt="" />
+                <img class="img-fluid w-100" src="{{asset('images/product/'.$product->image)}}" alt="{{$product->slug}}" style="height: 250px;" />
                 <div class="p_icon">
                   <a href="{{route('product.show',$product->slug)}}">
                     <i class="ti-eye"></i>
                   </a>
-                  <a href="#">
-                    <i class="ti-heart"></i>
-                  </a>
-                  <a href="#">
+                 
+                  <a href="{{route('product.show',$product->slug)}}">
                     <i class="ti-shopping-cart"></i>
                   </a>
                 </div>

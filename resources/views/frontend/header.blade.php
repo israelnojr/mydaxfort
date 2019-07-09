@@ -81,20 +81,19 @@
                   </li>
 
                   <li class="nav-item">
-                    <a href="#" class="icons">
+                    <a href="{{route('cart')}}" class="icons">
                       <i class="ti-shopping-cart"></i>
+                      @if(Cart::count() > 0)
+                      <span class="badge badge-danger rouded-circle">
+                        {{Cart::count()}}
+                      </span>
+                      @endif
                     </a>
                   </li>
 
                   <li class="nav-item">
                     <a href="#" class="icons">
                       <i class="ti-user" aria-hidden="true"></i>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a href="#" class="icons">
-                      <i class="ti-heart" aria-hidden="true"></i>
                     </a>
                   </li>
                 </ul>

@@ -27,6 +27,7 @@
         <div class="cart_inner">
           <div class="table-responsive">
             <table class="table">
+            @if(Cart::count() > 0)
               <thead>
                 <tr>
                   <th scope="col">Product</th>
@@ -36,22 +37,24 @@
                 </tr>
               </thead>
               <tbody>
+              @foreach(Cart::content() as $product)
                 <tr>
                   <td>
                     <div class="media">
                       <div class="d-flex">
                         <img
-                          src="img/product/single-product/cart-1.jpg"
-                          alt=""
-                        />
+                          src="{{asset('images/product/'.$product->model->image)}}" style="width: 100px;height: 70px;" alt="{{$product->model->slug}}"/>
                       </div>
                       <div class="media-body">
-                        <p>Minimalistic shop for multipurpose use</p>
+                        <p>{{$product->name}}</p>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <h5>$360.00</h5>
+                   <form action="{{route('cart.remove', $product->rowId)}}" method="post" >
+                    @csrf() @method('delete')
+                    <button type="submit" class="btn gray_btn">Remove</button>
+                   </form>
                   </td>
                   <td>
                     <div class="product_count">
@@ -81,117 +84,23 @@
                     </div>
                   </td>
                   <td>
-                    <h5>$720.00</h5>
+                    <h5>${{$product->price}}</h5>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <div class="media">
-                      <div class="d-flex">
-                        <img
-                          src="img/product/single-product/cart-1.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div class="media-body">
-                        <p>Minimalistic shop for multipurpose use</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <h5>$360.00</h5>
-                  </td>
-                  <td>
-                    <div class="product_count">
-                      <input
-                        type="text"
-                        name="qty"
-                        id="sst"
-                        maxlength="12"
-                        value="1"
-                        title="Quantity:"
-                        class="input-text qty"
-                      />
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                        class="increase items-count"
-                        type="button"
-                      >
-                        <i class="lnr lnr-chevron-up"></i>
-                      </button>
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                        class="reduced items-count"
-                        type="button"
-                      >
-                        <i class="lnr lnr-chevron-down"></i>
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <h5>$720.00</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="media">
-                      <div class="d-flex">
-                        <img
-                          src="img/product/single-product/cart-1.jpg"
-                          alt=""
-                        />
-                      </div>
-                      <div class="media-body">
-                        <p>Minimalistic shop for multipurpose use</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <h5>$360.00</h5>
-                  </td>
-                  <td>
-                    <div class="product_count">
-                      <input
-                        type="text"
-                        name="qty"
-                        id="sst"
-                        maxlength="12"
-                        value="1"
-                        title="Quantity:"
-                        class="input-text qty"
-                      />
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                        class="increase items-count"
-                        type="button"
-                      >
-                        <i class="lnr lnr-chevron-up"></i>
-                      </button>
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                        class="reduced items-count"
-                        type="button"
-                      >
-                        <i class="lnr lnr-chevron-down"></i>
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <h5>$720.00</h5>
-                  </td>
-                </tr>
+                @endforeach
+               
                 <tr class="bottom_button">
                   <td>
-                    <a class="gray_btn" href="#">Update Cart</a>
+                    <a class="gray_btn" href="{{route('cart.reset')}}">Reset Cart</a>
                   </td>
                   <td></td>
                   <td></td>
                   <td>
-                    <div class="cupon_text">
+                    <!-- <div class="cupon_text">
                       <input type="text" placeholder="Coupon Code" />
                       <a class="main_btn" href="#">Apply</a>
                       <a class="gray_btn" href="#">Close Coupon</a>
-                    </div>
+                    </div> -->
                   </td>
                 </tr>
                 <tr>
@@ -201,10 +110,30 @@
                     <h5>Subtotal</h5>
                   </td>
                   <td>
-                    <h5>$2160.00</h5>
+                    <h5>${{Cart::subtotal()}}</h5>
                   </td>
                 </tr>
-                <tr class="shipping_area">
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <h5>Tax</h5>
+                  </td>
+                  <td>
+                    <h5>${{Cart::tax()}}</h5>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <h5>Total</h5>
+                  </td>
+                  <td>
+                    <h5>${{Cart::total()}}</h5>
+                  </td>
+                </tr>
+                <!-- <tr class="shipping_area">
                   <td></td>
                   <td></td>
                   <td>
@@ -244,18 +173,21 @@
                       <a class="gray_btn" href="#">Update Details</a>
                     </div>
                   </td>
-                </tr>
+                </tr> -->
                 <tr class="out_button_area">
                   <td></td>
                   <td></td>
                   <td></td>
                   <td>
                     <div class="checkout_btn_inner">
-                      <a class="gray_btn" href="#">Continue Shopping</a>
-                      <a class="main_btn" href="#">Proceed to checkout</a>
+                      <a class="gray_btn" href="{{route('category')}}">Continue Shopping</a>
+                      <a class="main_btn" href="{{route('checkout')}}">Proceed to checkout</a>
                     </div>
                   </td>
                 </tr>
+                  @else
+                  <p>You don't have any item in your cart</p>
+                  @endif
               </tbody>
             </table>
           </div>
