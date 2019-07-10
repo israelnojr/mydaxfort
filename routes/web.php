@@ -12,13 +12,14 @@
 */
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
-Route::get('/category', 'CategoryController@index')->name('category');
-Route::get('/cart', 'CartController@index')->name('cart');
+Route::get('/category', 'CategoryController@index')->name('category.index');
+Route::get('/cart', 'CartController@index')->name('cart.index');
 Route::post('/cart', 'CartController@store')->name('cart.store');
 Route::get('/reset', 'CartController@reset')->name('cart.reset');
 Route::delete('/remove/{product}', 'CartController@destroy')->name('cart.remove');
-Route::get('/checkout', 'CheckoutController@index')->name('checkout');
-Route::get('/{product}/slug', 'ProductController@show')->name('product.show');
+Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+Route::get('/shop/{product}', 'ProductController@show')->name('product.show');
+
 
 
 

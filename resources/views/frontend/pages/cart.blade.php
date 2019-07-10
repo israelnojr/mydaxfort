@@ -12,8 +12,8 @@
               <p>Very us move be blessed multiply night</p>
             </div>
             <div class="page_link">
-              <a href="index.html">Home</a>
-              <a href="cart.html">Cart</a>
+              <a href="{{('/')}}">Home</a>
+              <a href="{{route('cart.index')}}">Cart</a>
             </div>
           </div>
         </div>
@@ -179,9 +179,13 @@
                   <td></td>
                   <td></td>
                   <td>
-                    <div class="checkout_btn_inner">
-                      <a class="gray_btn" href="{{route('category')}}">Continue Shopping</a>
-                      <a class="main_btn" href="{{route('checkout')}}">Proceed to checkout</a>
+                    <div class="checkout_btn_inner  d-flex">
+                      <a class="gray_btn mr-2" href="{{route('category.index')}}">Continue To Shop</a>
+                      @guest 
+                        <a class="main_btn" href="{{route('login')}}" href="{{route('checkout.index')}}">Proceed to checkout</a>
+                      @else
+                        <a class="main_btn" href="{{route('checkout.index')}}">Proceed to checkout</a>
+                      @endguest
                     </div>
                   </td>
                 </tr>

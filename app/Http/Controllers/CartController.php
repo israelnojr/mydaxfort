@@ -40,10 +40,10 @@ class CartController extends Controller
             return $cartItem->id === $request->id;
         });
         if($duplicates->isNotEmpty()){
-            return redirect()->route('cart')->with('success', 'Item already in cart');
+            return redirect()->route('cart.index')->with('success', 'Item already in cart');
         }
         Cart::add($request->id, $request->name, $request->qty, $request->price)->associate('App\Product');
-        return redirect()->route('cart')->with('success', 'Item added to cart successfully');
+        return redirect()->route('cart.index')->with('success', 'Item added to cart successfully');
     }
 
     /**
@@ -89,7 +89,7 @@ class CartController extends Controller
     public function destroy($id)
     {
         Cart::remove($id);
-        return redirect()->route('category')->with('success', 'Item has been removed!');
+        return redirect()->route('category.index')->with('success', 'Item has been removed!');
 
     }
 

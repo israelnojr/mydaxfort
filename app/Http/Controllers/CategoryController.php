@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('frontend.pages.category', compact('categories'));
+        if(request()->category){
+                $products = Product::with('category')->wherehas('category', function($query){
+                $query->where('slug', request()->category);
+            })->get();
+            $categories = Category::all();
+            $categoryName = Category::where('slug', request()->category)->first()->name;
+        }else{
+            $categories = Category::all();
+            $products = Product::inRandomOrder()->take(12)->get();
+            $categoryName = 'Category';
+        }
+        return view('frontend.pages.category', compact('categories','products','categoryName'));
     }
 
     /**
@@ -45,9 +56,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+       
     }
 
     /**

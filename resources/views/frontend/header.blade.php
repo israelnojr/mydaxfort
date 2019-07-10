@@ -14,7 +14,7 @@
             <div class="float-right">
               <ul class="right_side">
                 <li>
-                  <a href="cart.html">
+                  <a href="{{route('cart.index')}}">
                     gift card
                   </a>
                 </li>
@@ -55,14 +55,14 @@
                       aria-expanded="false">Shop</a>
                     <ul class="dropdown-menu">
                       <li class="nav-item">
-                        <a class="nav-link" href="{{route('category')}}">Shop Category</a>
+                        <a class="nav-link" href="{{route('category.index')}}">Shop Category</a>
                       </li>
 
                       <li class="nav-item">
-                        <a class="nav-link" href="{{route('checkout')}}">Checkout</a>
+                        <a class="nav-link" href="{{route('checkout.index')}}">Checkout</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{route('cart')}}">Shopping Cart</a>
+                        <a class="nav-link" href="{{route('cart.index')}}">Shopping Cart</a>
                       </li>
                     </ul>
                   </li>
@@ -81,7 +81,7 @@
                   </li>
 
                   <li class="nav-item">
-                    <a href="{{route('cart')}}" class="icons">
+                    <a href="{{route('cart.index')}}" class="icons">
                       <i class="ti-shopping-cart"></i>
                       @if(Cart::count() > 0)
                       <span class="badge badge-danger rouded-circle">

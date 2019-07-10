@@ -32,58 +32,22 @@
                 class="carousel slide"
                 data-ride="carousel"
               >
-                <ol class="carousel-indicators">
-                  <li
-                    data-target="#carouselExampleIndicators"
-                    data-slide-to="0"
-                    class="active"
-                  >
-                    <img
-                      src="{{asset('frontend/img/product/single-product/s-product-s-2.jpg')}}"
-                      alt=""
-                    />
-                  </li>
-                  <li
-                    data-target="#carouselExampleIndicators"
-                    data-slide-to="1"
-                  >
-                    <img
-                      src="{{asset('frontend/img/product/single-product/s-product-s-3.jpg')}}"
-                      alt=""
-                    />
-                  </li>
-                  <li
-                    data-target="#carouselExampleIndicators"
-                    data-slide-to="2"
-                  >
-                    <img
-                      src="{{asset('frontend/img/product/single-product/s-product-s-4.jpg')}}"
-                      alt=""
-                    />
-                  </li>
-                </ol>
+                
                 <div class="carousel-inner">
                   <div class="carousel-item active">
                     <img
                       class="d-block w-100"
-                      src="{{asset('frontend/img/product/single-product/s-product-1.jpg')}}"
+                      src="{{asset('images/product/'.$product->image)}}"
                       alt="First slide"
                     />
                   </div>
-                  <div class="carousel-item">
+                  <!-- <div class="carousel-item">
                     <img
                       class="d-block w-100"
                       src="{{asset('frontend/img/product/single-product/s-product-1.jpg')}}"
                       alt="Second slide"
                     />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      class="d-block w-100"
-                      src="{{asset('frontend/img/product/single-product/s-product-1.jpg')}}"
-                      alt="Third slide"
-                    />
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -99,7 +63,7 @@
                   >
                 </li>
                 <li>
-                  <a href="#"> <span>Availibility</span> : In Stock</a>
+                  <a href=""> <span>Availibility</span> : In Stock</a>
                 </li>
               </ul>
               <p>

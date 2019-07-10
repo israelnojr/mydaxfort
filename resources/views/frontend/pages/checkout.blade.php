@@ -13,7 +13,7 @@
             </div>
             <div class="page_link">
               <a href="{{route('welcome')}}">Home</a>
-              <a href="{{route('checkout')}}">Product Checkout</a>
+              <a href="{{route('checkout.index')}}">Product Checkout</a>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
     <!--================Checkout Area =================-->
     <section class="checkout_area section_gap">
       <div class="container">
-       
+       @if(Cart::count() > 0)
         <div class="billing_details">
           <div class="row">
             <div class="col-lg-8">
@@ -179,25 +179,29 @@
                   <li>
                     <a href="#"
                       >Subtotal
-                      <span>${{Cart::subtotal()}}</span>
+                      <span> ${{Cart::subtotal()}}</span>
                     </a>
                   </li>
                   <li>
                     <a href="#"
-                      >Shipping
-                      <span>Tax rate: ${{Cart::tax()}}</span>
+                      >Tax
+                      <span> ${{Cart::tax()}}</span>
                     </a>
                   </li>
                   <li>
                     <a href="#"
                       >Total
-                      <span>${{Cart::total()}}</span>
+                      <span> ${{Cart::total()}}</span>
                     </a>
                   </li>
                 </ul>
                 
             </div>
           </div>
+          @else
+          <p>You do not have item to checkout</p>
+          @endif
+
         </div>
       </div>
     </section>
