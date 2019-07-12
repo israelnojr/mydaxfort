@@ -76,7 +76,7 @@
                   name="qty"
                   id="sst"
                   maxlength="12"
-                 
+                  value="1"
                   title="Quantity:"
                   class="input-text qty"
                 />
@@ -128,7 +128,7 @@
               >Description</a
             >
           </li>
-        
+          
           <li class="nav-item">
             <a
               class="nav-link active"
@@ -138,7 +138,8 @@
               role="tab"
               aria-controls="review"
               aria-selected="false"
-              >Reviews</a>
+              >Reviews</a
+            >
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -146,106 +147,85 @@
             class="tab-pane fade"
             id="home"
             role="tabpanel"
-            aria-labelledby="home-tab">
-            <p>{{$product->short_desc}}</p>
-            <p>{{$product->long_desc}}</p>
+            aria-labelledby="home-tab"
+          >
+            <p>
+              {{$product->short_desc}}
+            </p>
+            <p>
+              {{$product->long_desc}}
+            </p>
           </div>
           <div
             class="tab-pane fade"
             id="profile"
             role="tabpanel"
-            aria-labelledby="profile-tab">          
+            aria-labelledby="profile-tab">
+          </div>
+          <div
+            class="tab-pane fade"
+            id="contact"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="comment_list">
+                </div>
+              </div>
+            </div>
           </div>
           <div
             class="tab-pane fade show active"
             id="review"
             role="tabpanel"
-            aria-labelledby="review-tab">
-            <div class="row">
+            aria-labelledby="review-tab"
+          >
+            <div class="row" id="app">
               <div class="col-lg-6">
-                <div class="row total_rate"></div>
+                <div class="row total_rate">
+                  <div class="col-12">
+                    <div class="box_total">
+                      <h5>Overall</h5>
+                      <h4>{{$product->getStarRating()}}</h4>
+                      <h6>({{$product->getReviewCount()}} Reviews)</h6>
+                    </div>
+                  </div>
+                </div>
                 <div class="review_list">
+                  @forelse($product->review as $review)
                   <div class="review_item">
                     <div class="media">
-                      <div class="d-flex">
-                        <img src="{{asset('frontend/img/product/single-product/review-1.png')}}" alt=""/>
+                      <div class="d-flex mt-3">
+                        <img
+                          src="{{asset('images/review/1561553669.png')}}"
+                          alt="" style="width:50px; height:50px;"
+                        />
                       </div>
-                      <div class="media-body">
-                        <h4>Blake Ruiz</h4>
+                      <div class="media-body mt-3"> 
+                        <h4>{{$review->user->name}}</h4>
+                        <star-rating star-size="20" increment="0.5" :rating="{{$review->rating}}"></star-rating>
                       </div>
                     </div>
+                      <p>{{$review->title}}</p>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo
+                      {{$review->review}}
                     </p>
                   </div>
-                  
+                  @empty
+                    <p>You can be the first to leave a review for this product</p>
+                  @endforelse
                 </div>
-              </div>
+              </div>                 
               <div class="col-lg-6">
                 <div class="review_box">
-                  <h4>Add a Review</h4>
-                  <form
-                    class="row contact_form"
-                    action="contact_process.php"
-                    method="post"
-                    id="contactForm"
-                    novalidate="novalidate">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="name"
-                          name="name"
-                          placeholder="Your Full name"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="email"
-                          name="email"
-                          placeholder="Email Address"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="number"
-                          name="number"
-                          placeholder="Phone Number"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <textarea
-                          class="form-control"
-                          name="message"
-                          id="message"
-                          rows="3"
-                          placeholder="Review"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div class="col-md-12 text-right">
-                      <button
-                        type="submit"
-                        value="submit"
-                        class="btn submit_btn">
-                        Submit Now
-                      </button>
-                    </div>
-                  </form>
+                  <star-rating increment="0.5" :rating="{{$product->getStarRating()}}"></star-rating>
+                  <h4 class="mt-3" >Add a Review</h4>
+                  <review-form
+                    :product="{{$product}}" 
+                    url="{{route('review.store')}}"
+                  ></review-form>
+                </div>
                 </div>
               </div>
             </div>

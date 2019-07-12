@@ -170,7 +170,7 @@
                     <a href="#"
                       >{{$product->name}}
                       <span class="middle">x {{$product->qty}}</span>
-                      <span class="last">${{$product->price}}</span>
+                      <span class="last">${{$product->subtotal}}</span>
                     </a>
                   </li>
                 @endforeach

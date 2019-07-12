@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Support\Facades\Redirect;
 
-class CartController extends Controller
+class ProductReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +13,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.cart');
+        //
     }
 
     /**
@@ -36,14 +34,22 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $duplicates = Cart::search(function($cartItem, $rowId) use($request){
-            return $cartItem->id === $request->id;
-        });
-        if($duplicates->isNotEmpty()){
-            return redirect()->route('cart.index')->with('success', 'Item already in cart');
-        }
-        Cart::add($request->id, $request->name, $request->qty, $request->price)->associate('App\Product');
-        return redirect()->route('cart.index')->with('success', 'Item added to cart successfully');
+        // $this->validate($request, [
+        //     'product_id' => ['required'],
+        //     'title' =>  ['required'],
+        //     'rating' => [ 'required'],
+        //     'review' => [ 'required']
+        // ]);
+        // return Review::create([
+        //     'user_id' => auth::id(),
+        //     'product_id' => $request['product_id'],
+        //     'title' => $request['title'],
+        //     'rating' => $request['rating'],
+        //     'review' => $request['review'],
+        // ])->redirect()->route('product.show');
+
+        auth()->user()->review()->create($request->all());
+        return back();
     }
 
     /**
@@ -67,15 +73,7 @@ class CartController extends Controller
     {
         //
     }
-    public function UpdateCart(Request $request)
-    {
-        $qty = $request->qty;
-        $product_id = $request->rowId;
-  
-        Cart::update($product_id, $qty);
 
-        return Redirect()->route('cart.index');
-    }
     /**
      * Update the specified resource in storage.
      *
@@ -96,14 +94,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        Cart::remove($id);
-        return redirect()->route('category.index')->with('success', 'Item has been removed!');
-
-    }
-
-    public function reset()
-    {
-        Cart::destroy();
-        return redirect()->route('welcome');
+        //
     }
 }

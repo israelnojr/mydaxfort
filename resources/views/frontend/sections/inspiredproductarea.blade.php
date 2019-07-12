@@ -17,8 +17,7 @@
                 <div class="p_icon">
                   <a href="{{route('product.show',$product->slug)}}">
                     <i class="ti-eye"></i>
-                  </a>
-                 
+                  </a>                 
                   <a href="{{route('product.show',$product->slug)}}">
                     <i class="ti-shopping-cart"></i>
                   </a>

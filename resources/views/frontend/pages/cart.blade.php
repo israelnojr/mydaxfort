@@ -31,7 +31,7 @@
               <thead>
                 <tr>
                   <th scope="col">Product</th>
-                  <th scope="col">Price</th>
+                  <th scope="col">Action</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Total</th>
                 </tr>
@@ -53,54 +53,43 @@
                   <td>
                    <form action="{{route('cart.remove', $product->rowId)}}" method="post" >
                     @csrf() @method('delete')
-                    <button type="submit" class="btn gray_btn">Remove</button>
+                    <button type="submit" class="btn main_btn">Remove</button>
                    </form>
                   </td>
                   <td>
-                    <div class="product_count">
-                      <input
-                        type="text"
-                        name="qty"
-                        id="sst"
-                        maxlength="12"
-                        value="{{$product->qty}}"
-                        title="Quantity:"
-                        class="input-text qty"
-                      />
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                        class="increase items-count"
-                        type="button"
-                      >
-                        <i class="lnr lnr-chevron-up"></i>
-                      </button>
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                        class="reduced items-count"
-                        type="button"
-                      >
-                        <i class="lnr lnr-chevron-down"></i>
-                      </button>
+                    <div class="product_count d-flex" >
+                        <form action="{{route('cart.updatecart')}}" method="post"> @csrf()
+                            <input
+                            type="text"
+                            name="qty"
+                            id="sst"
+                            maxlength="12"
+                            value="{{$product->qty}}"
+                            title="Quantity:"
+                            style="width: 42px;
+                                  padding-left: 17px;
+                                  margin-right: -4px;
+                                  height: 35px; "
+                            />
+                          <input type="hidden" name="rowId" value="{{$product->rowId}}">
+                          <input type="submit" value="Update" class="btn main_btn" style="padding: 2px; height: 50px;" >
+                        </form>
                     </div>
                   </td>
                   <td>
-                    <h5>${{$product->price}}</h5>
+                    <h5>${{$product->subtotal}}</h5>
                   </td>
                 </tr>
                 @endforeach
                
                 <tr class="bottom_button">
                   <td>
-                    <a class="gray_btn" href="{{route('cart.reset')}}">Reset Cart</a>
+                    <a class="main_btn" href="{{route('cart.reset')}}">Reset Cart</a>
                   </td>
                   <td></td>
                   <td></td>
                   <td>
-                    <!-- <div class="cupon_text">
-                      <input type="text" placeholder="Coupon Code" />
-                      <a class="main_btn" href="#">Apply</a>
-                      <a class="gray_btn" href="#">Close Coupon</a>
-                    </div> -->
+                   
                   </td>
                 </tr>
                 <tr>
@@ -133,47 +122,7 @@
                     <h5>${{Cart::total()}}</h5>
                   </td>
                 </tr>
-                <!-- <tr class="shipping_area">
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <h5>Shipping</h5>
-                  </td>
-                  <td>
-                    <div class="shipping_box">
-                      <ul class="list">
-                        <li>
-                          <a href="#">Flat Rate: $5.00</a>
-                        </li>
-                        <li>
-                          <a href="#">Free Shipping</a>
-                        </li>
-                        <li>
-                          <a href="#">Flat Rate: $10.00</a>
-                        </li>
-                        <li class="active">
-                          <a href="#">Local Delivery: $2.00</a>
-                        </li>
-                      </ul>
-                      <h6>
-                        Calculate Shipping
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                      </h6>
-                      <select class="shipping_select">
-                        <option value="1">Bangladesh</option>
-                        <option value="2">India</option>
-                        <option value="4">Pakistan</option>
-                      </select>
-                      <select class="shipping_select">
-                        <option value="1">Select a State</option>
-                        <option value="2">Select a State</option>
-                        <option value="4">Select a State</option>
-                      </select>
-                      <input type="text" placeholder="Postcode/Zipcode" />
-                      <a class="gray_btn" href="#">Update Details</a>
-                    </div>
-                  </td>
-                </tr> -->
+                
                 <tr class="out_button_area">
                   <td></td>
                   <td></td>

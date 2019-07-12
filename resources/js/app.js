@@ -5,6 +5,7 @@ import VueProgressBar from 'vue-progressbar';
 import { Form, HasError, AlertError } from 'vform';
 import moment from 'moment';
 import VueRouter from 'vue-router';
+import StarRating from 'vue-star-rating';
 
 const toast = swal.mixin({
   toast: true,
@@ -23,6 +24,7 @@ window.toast = toast;
 Vue.use(VueRouter)
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+Vue.component('star-rating', StarRating);
 
 Vue.use(VueProgressBar, {
   color: 'rgb(143, 255, 199)',
@@ -89,6 +91,8 @@ Vue.component(
 
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('review-form', require('./components/ReviewForm.vue').default);
+
 
 const app = new Vue({
     el: '#app',
