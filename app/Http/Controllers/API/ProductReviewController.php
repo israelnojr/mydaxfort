@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace Mydaxfort\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Mydaxfort\Http\Controllers\Controller;
 
 class ProductReviewController extends Controller
 {

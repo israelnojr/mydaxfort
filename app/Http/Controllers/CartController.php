@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Mydaxfort\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -42,7 +42,7 @@ class CartController extends Controller
         if($duplicates->isNotEmpty()){
             return redirect()->route('cart.index')->with('success', 'Item already in cart');
         }
-        Cart::add($request->id, $request->name, $request->qty, $request->price)->associate('App\Product');
+        Cart::add($request->id, $request->name, $request->qty, $request->price)->associate('Mydaxfort\Product');
         return redirect()->route('cart.index')->with('success', 'Item added to cart successfully');
     }
 

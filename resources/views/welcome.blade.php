@@ -21,7 +21,7 @@
 
   <!--================ Offer Area =================-->
   <section class="offer_area">
-    <!-- @include('frontend.sections.offerarea') -->
+    @include('frontend.sections.offerarea')
   </section>
   <!--================ End Offer Area =================-->
 

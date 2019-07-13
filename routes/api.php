@@ -21,7 +21,7 @@ Route::group(['middleware'=>'auth:api'], function (){
     Route::apiResources(['user' => 'API\UserController']);
     Route::apiResources(['product' => 'API\ProductController']);
     Route::apiResources(['category' => 'API\CategoryController']);
-    // Route::apiResources(['review' => 'API\ProductReviewController']);
+    Route::apiResources(['hero' => 'API\HeroHeaderController']);
     Route::get('profile', 'API\ProfileController@setting');
     Route::put('profile', 'API\ProfileController@update');
 });

@@ -56,9 +56,13 @@ let routes = [
 
     { 
       path: '/category', name: 'category', component: require('./components/Category.vue').default  
+    },
+
+    { 
+      path: '/hero', name: 'hero', component: require('./components/HeroHeader.vue').default  
     }
   ]
-
+  
 const router = new VueRouter({
   mode: 'history',
   routes // short for `routes: routes`

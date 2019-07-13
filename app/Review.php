@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Mydaxfort;
 
 use Illuminate\Database\Eloquent\Model;
 

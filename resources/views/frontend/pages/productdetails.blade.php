@@ -55,7 +55,7 @@
           <div class="col-lg-5 offset-lg-1">
             <div class="s_product_text">
               <h3>{{$product->name}}</h3>
-              <h2>${{$product->price}}</h2>
+              <h2>₦ {{$product->price}}</h2>
               <ul class="list">
                 <li>
                   <a class="active" href="#">
@@ -204,7 +204,7 @@
                       </div>
                       <div class="media-body mt-3"> 
                         <h4>{{$review->user->name}}</h4>
-                        <star-rating star-size="20" increment="0.5" :rating="{{$review->rating}}"></star-rating>
+                        <star-rating star-size=20 increment=0.5 :rating="{{$review->rating}}"></star-rating>
                       </div>
                     </div>
                       <p>{{$review->title}}</p>
@@ -219,7 +219,7 @@
               </div>                 
               <div class="col-lg-6">
                 <div class="review_box">
-                  <star-rating increment="0.5" :rating="{{$product->getStarRating()}}"></star-rating>
+                  <star-rating increment=0.5 :rating="{{$product->getStarRating()}}"></star-rating>
                   <h4 class="mt-3" >Add a Review</h4>
                   <review-form
                     :product="{{$product}}" 

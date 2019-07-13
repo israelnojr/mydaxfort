@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Mydaxfort\Http\Controllers;
 
-use App\Product;
+use Mydaxfort\Product;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller

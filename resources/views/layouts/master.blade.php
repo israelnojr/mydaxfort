@@ -146,6 +146,14 @@
               </span>
           </router-link>
         </li>  
+        <li class="">
+          <router-link to="/hero">
+            <i class="fa fa-th"></i> <span>HeroHeader</span>
+              <span class="pull-right-container">
+              
+              </span>
+          </router-link>
+        </li>
 
         <li class="">
           <router-link to="/developer">

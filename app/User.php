@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Mydaxfort;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -70,5 +70,10 @@ class User extends Authenticatable
     public function review()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function heroHeader()
+    {
+        return $this->hasMany(HeroHeader::class);
     }
 }

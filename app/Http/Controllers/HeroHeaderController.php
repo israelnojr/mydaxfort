@@ -2,10 +2,9 @@
 
 namespace Mydaxfort\Http\Controllers;
 
-use Mydaxfort\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class HeroHeaderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -44,10 +43,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        $product = Product::where('slug', $slug)->first();
-        return view('frontend.pages.productdetails', compact('product'));
+        //
     }
 
     /**

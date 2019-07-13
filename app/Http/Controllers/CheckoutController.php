@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Mydaxfort\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -34,7 +34,7 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('paypage');
     }
 
     /**
@@ -81,4 +81,5 @@ class CheckoutController extends Controller
     {
         //
     }
+
 }

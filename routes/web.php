@@ -24,7 +24,12 @@ Route::get('/shop/{product}', 'ProductController@show')->name('product.show');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+    Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
     Route::post('/review','ProductReviewController@store')->name('review.store');
+    
+    Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
+    Route::get('/paypage', 'PaymentController@Paypage')->name('paypage');
+    Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
 });
 
 Auth::routes();

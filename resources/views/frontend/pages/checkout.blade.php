@@ -29,12 +29,13 @@
           <div class="row">
             <div class="col-lg-8">
               <h3>Billing Details</h3>
+              
               <form
                 class="row contact_form"
-                action="#"
+                action="{{route('checkout.store')}}"
                 method="post"
                 novalidate="novalidate"
-              >
+              >  @csrf()
                 <div class="col-md-6 form-group p_star">
                   <input
                     type="text"
@@ -123,36 +124,6 @@
                 <div class="col-md-12 form-group p_star">
                   <button type="submit" class="main_btn">Proceed to Paystack</button>
                 </div>
-              
-                <!-- <div class="col-md-12 form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="zip"
-                    name="zip"
-                    placeholder="Postcode/ZIP"
-                  />
-                </div> -->
-                <!-- <div class="col-md-12 form-group">
-                  <div class="creat_account">
-                    <input type="checkbox" id="f-option2" name="selector" />
-                    <label for="f-option2">Create an account?</label>
-                  </div>
-                </div>
-                <div class="col-md-12 form-group">
-                  <div class="creat_account">
-                    <h3>Shipping Details</h3>
-                    <input type="checkbox" id="f-option3" name="selector" />
-                    <label for="f-option3">Ship to a different address?</label>
-                  </div>
-                  <textarea
-                    class="form-control"
-                    name="message"
-                    id="message"
-                    rows="1"
-                    placeholder="Order Notes"
-                  ></textarea>
-                </div> -->
               </form>
             </div>
             <div class="col-lg-4">
@@ -170,7 +141,7 @@
                     <a href="#"
                       >{{$product->name}}
                       <span class="middle">x {{$product->qty}}</span>
-                      <span class="last">${{$product->subtotal}}</span>
+                      <span class="last">₦ {{$product->subtotal}}</span>
                     </a>
                   </li>
                 @endforeach
@@ -179,19 +150,19 @@
                   <li>
                     <a href="#"
                       >Subtotal
-                      <span> ${{Cart::subtotal()}}</span>
+                      <span> ₦ {{Cart::subtotal()}}</span>
                     </a>
                   </li>
                   <li>
                     <a href="#"
                       >Tax
-                      <span> ${{Cart::tax()}}</span>
+                      <span> ₦ {{Cart::tax()}}</span>
                     </a>
                   </li>
                   <li>
                     <a href="#"
                       >Total
-                      <span> ${{Cart::total()}}</span>
+                      <span> ₦ {{Cart::total()}}</span>
                     </a>
                   </li>
                 </ul>
@@ -201,7 +172,6 @@
           @else
           <p>You do not have item to checkout</p>
           @endif
-
         </div>
       </div>
     </section>

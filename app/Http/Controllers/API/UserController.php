@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace Mydaxfort\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
+use Mydaxfort\Http\Controllers\Controller;
+use Mydaxfort\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller

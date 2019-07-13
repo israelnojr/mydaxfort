@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace Mydaxfort\Http\Controllers\API;
 
 use auth;
-use App\Category;
+use Mydaxfort\Category;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Mydaxfort\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
