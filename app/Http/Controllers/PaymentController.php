@@ -37,4 +37,5 @@ class PaymentController extends Controller
     {
         return view('frontend.pages.paypage');
     }
+
 }

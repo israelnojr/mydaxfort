@@ -29,102 +29,95 @@
           <div class="row">
             <div class="col-lg-8">
               <h3>Billing Details</h3>
-              
-              <form
-                class="row contact_form"
-                action="{{route('checkout.store')}}"
-                method="post"
-                novalidate="novalidate"
-              >  @csrf()
+              <form method="POST" action="{{ route('checkout.store') }}"  class="row contact_form">
+                        @csrf
                 <div class="col-md-6 form-group p_star">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="first"
-                    name="first_name"
-                  />
-                  <span
-                    class="placeholder"
-                    data-placeholder="First name"
-                  ></span>
+                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" 
+                    value="{{ old('first_name') }}"  autocomplete="first_name" autofocus placeholder="First Name">
+
+                    @error('first_name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+
                 <div class="col-md-6 form-group p_star">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="last"
-                    name="last_name"
-                  />
-                  <span class="placeholder" data-placeholder="Last name"></span>
+                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" 
+                    value="{{ old('last_name') }}"  autocomplete="last_name" autofocus placeholder="Last Name">
+
+                    @error('last_name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-              
+
                 <div class="col-md-6 form-group p_star">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="number"
-                    name="number"
-                  />
-                  <span
-                    class="placeholder"
-                    data-placeholder="Phone number"
-                  ></span>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" 
+                    value="{{ old('email') }}"  autocomplete="email" placeholder="Email Address">
+
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+
                 <div class="col-md-6 form-group p_star">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="compemailany"
-                  />
-                  <span
-                    class="placeholder"
-                    data-placeholder="Email Address"
-                  ></span>
+                    <input id="number" type="text" class="form-control @error('number') is-invalid @enderror" name="number" 
+                    value="{{ old('number') }}"  autocomplete="number" placeholder="Mobile Number">
+
+                    @error('number')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+
                 <div class="col-md-6 form-group p_star">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="country"
-                    name="country"
-                  />
-                  <span
-                    class="placeholder"
-                    data-placeholder="Country"
-                  ></span>
+                    <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" 
+                    value="{{ old('address') }}"  autocomplete="address" placeholder="Address">
+
+                    @error('address')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+
                 <div class="col-md-6 form-group p_star">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="add1"
-                    name="address"
-                  />
-                  <span
-                    class="placeholder"
-                    data-placeholder="Address "
-                  ></span>
+                    <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" 
+                    value="{{ old('city') }}"  autocomplete="city" placeholder="City">
+
+                    @error('city')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-                
+
                 <div class="col-md-12 form-group p_star">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="city"
-                    name="city"
-                  />
-                  <span class="placeholder" data-placeholder="Town/City"></span>
+                    <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" 
+                    value="{{ old('country') }}"  autocomplete="country" placeholder="Country">
+
+                    @error('country')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+
                 <div class="col-md-12 form-group p_star">
-                <input type="checkbox" id="f-option4" name="selector" value="yes"/>
-                  <label for="f-option4">I’ve read and accept the </label>
-                  <a href="#">terms & conditions*</a>
+                  <input type="checkbox" id="f-option4" name="terms" value="yes"/>
+                    <label for="f-option4">I’ve read and accept the </label>
+                    <a href="#">terms & conditions*</a>
                 </div>
                 <div class="col-md-12 form-group p_star">
                   <button type="submit" class="main_btn">Proceed to Paystack</button>
                 </div>
               </form>
+                
             </div>
             <div class="col-lg-4">
               <div class="order_box">

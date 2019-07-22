@@ -3,7 +3,7 @@
 namespace Mydaxfort\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Mydaxfort\Checkout;
 class CheckoutController extends Controller
 {
     /**
@@ -34,6 +34,28 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'number' => 'required',
+            'email' => 'required',
+            'country' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'terms' => 'required',
+        ]);
+        $checkout = new Checkout;
+        $checkout->first_name = $request->input('first_name');
+        $checkout->last_name = $request->input('last_name');
+        $checkout->number = $request->input('number');
+        $checkout->email = $request->input('email');
+        $checkout->country = $request->input('country');
+        $checkout->address = $request->input('address');
+        $checkout->city = $request->input('city');
+        $checkout->terms = $request->input('terms');
+    
+        $checkout->save();
+
         return redirect()->route('paypage');
     }
 
