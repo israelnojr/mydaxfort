@@ -20,9 +20,9 @@
   <!--================ End Feature Product Area =================-->
 
   <!--================ Offer Area =================-->
-  <section class="offer_area">
+  <!-- <section class="inspired_product_area section_gap_bottom_custom">
     @include('frontend.sections.offerarea')
-  </section>
+  </section> -->
   <!--================ End Offer Area =================-->
 
   <!--================ New Product Area =================-->

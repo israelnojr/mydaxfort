@@ -29,7 +29,7 @@
                   <h4>{{$product->name}}</h4>
                 </a>
                 <div class="mt-3">
-                  <span class="mr-4">${{$product->price}}</span>
+                  <span class="mr-4">₦ {{$product->price}}</span>
                   <!-- <del>$35.00</del> -->
                 </div>
               </div>

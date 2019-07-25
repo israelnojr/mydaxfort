@@ -23,6 +23,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                 <input
+                    required
                     type="title"
                     class="form-control"
                     id="title"
@@ -37,6 +38,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <textarea
+                        required
                         class="form-control"
                         v-model="formData.review"
                         id="review"

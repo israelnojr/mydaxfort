@@ -156,6 +156,15 @@
         </li>
 
         <li class="">
+          <router-link to="/order">
+            <i class="fa fa-th"></i> <span>Orders</span>
+              <span class="pull-right-container">
+              
+              </span>
+          </router-link>
+        </li>
+
+        <li class="">
           <router-link to="/developer">
             <i class="fab fa-connectdevelop"></i> <span>Developer</span>
               <span class="pull-right-container">

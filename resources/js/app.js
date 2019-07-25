@@ -60,6 +60,10 @@ let routes = [
 
     { 
       path: '/hero', name: 'hero', component: require('./components/HeroHeader.vue').default  
+    },
+
+    { 
+      path: '/order', name: 'order', component: require('./components/Orders.vue').default  
     }
   ]
   

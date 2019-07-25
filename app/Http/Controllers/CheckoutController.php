@@ -21,6 +21,12 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function loadOrders()
+    {
+        return Checkout::all();
+    }
+
     public function create()
     {
         //

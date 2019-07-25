@@ -24,6 +24,7 @@ Route::get('/shop/{product}', 'ProductController@show')->name('product.show');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+    Route::get('/orders', 'CheckoutController@loadOrders')->name('checkout.orders');
     Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
     Route::post('/review','ProductReviewController@store')->name('review.store');
     
