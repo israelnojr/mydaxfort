@@ -14,7 +14,6 @@
         <div class="col-lg-2 col-md-6 single-footer-widget">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="#">Jobs</a></li>
             <li><a href="#">Brand Assets</a></li>
             <li><a href="#">Investor Relations</a></li>
             <li><a href="#">Terms of Service</a></li>
@@ -23,9 +22,6 @@
         <div class="col-lg-2 col-md-6 single-footer-widget">
           <h4>Features</h4>
           <ul>
-            <li><a href="#">Jobs</a></li>
-            <li><a href="#">Brand Assets</a></li>
-            <li><a href="#">Investor Relations</a></li>
             <li><a href="#">Terms of Service</a></li>
           </ul>
         </div>
@@ -42,7 +38,7 @@
           <h4>Newsletter</h4>
           <p>You can trust us. we only send promo offers,</p>
           <div class="form-wrap" id="mc_embed_signup">
-            <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+            <form target="_blank" action=""
               method="get" class="form-inline">
               <input class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'Your Email Address '" required="" type="email">

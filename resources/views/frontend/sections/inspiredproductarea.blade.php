@@ -3,7 +3,7 @@
         <div class="col-lg-12">
           <div class="main_title">
             <h2><span>Inspired products</span></h2>
-            <p>Bring called seed first of third give itself now ment</p>
+            <p>Browse list of products inspired by customers interest</p>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
                   <h4>{{$product->name}}</h4>
                 </a>
                 <div class="mt-3">
-                  <span class="mr-4">₦ {{$product->price}}</span>
+                  <span class="mr-4">$ {{$product->price}}</span>
                   <!-- <del>$35.00</del> -->
                 </div>
               </div>

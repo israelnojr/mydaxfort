@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="main_title">
             <h2><span>new products</span></h2>
-            <p>Bring called seed first of third give itself now ment</p>
+            <p>Browse list of latest products</p>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
                 <div class="product-img">
                 <img class="img-fluid" src="{{asset('images/product/'.$product->image)}}" alt="{{$product->slug}}" style=" width:100%; height: 300px;"/>
             </div>
-                <h4>₦ {{$product->price}}</h4>
+                <h4>$ {{$product->price}}</h4>
                 <form action="{{route('cart.store')}}" method="post">
                     @csrf()
                     <input type="hidden" name="id" value="{{$product->id}}">
@@ -52,7 +52,7 @@
                         <h4>{{$product->name}}</h4>
                         </a>
                         <div class="mt-3">
-                        <span class="mr-4">₦ {{$product->price}}</span>
+                        <span class="mr-4">$ {{$product->price}}</span>
                         <!-- <del>$35.00</del> -->
                         </div>
                     </div>

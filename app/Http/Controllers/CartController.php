@@ -40,10 +40,12 @@ class CartController extends Controller
             return $cartItem->id === $request->id;
         });
         if($duplicates->isNotEmpty()){
-            return redirect()->route('cart.index')->with('success', 'Item already in cart');
+            $request->session()->flash('status',  'Item already in cart');
+            return redirect()->route('cart.index');
         }
         Cart::add($request->id, $request->name, $request->qty, $request->price)->associate('Mydaxfort\Product');
-        return redirect()->route('cart.index')->with('success', 'Item added to cart successfully');
+        $request->session()->flash('status',  'Item added to cart successfully');
+        return redirect()->route('cart.index');
     }
 
     /**
@@ -73,7 +75,7 @@ class CartController extends Controller
         $product_id = $request->rowId;
   
         Cart::update($product_id, $qty);
-
+        $request->session()->flash('status',  'Item quantity updated successfully');
         return Redirect()->route('cart.index');
     }
     /**
@@ -94,16 +96,18 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         Cart::remove($id);
-        return redirect()->route('category.index')->with('success', 'Item has been removed!');
+        $request->session()->flash('status',  'Item has been removed!');
+        return redirect()->route('category.index');
 
     }
 
-    public function reset()
+    public function reset(Request $request)
     {
         Cart::destroy();
+        $request->session()->flash('status',  'Cart reset successfully');
         return redirect()->route('welcome');
     }
 }

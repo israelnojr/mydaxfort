@@ -24,6 +24,7 @@
   <!-- main css -->
   <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}" />
   <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}" />
+  <link rel="stylesheet" href="{{asset('frontend/css/message.css')}}" />
 </head>
 @include('frontend.header')
 
@@ -48,8 +49,10 @@
   <script src="{{asset('frontend/vendors/counter-up/jquery.counterup.js')}}"></script>
   <script src="{{asset('frontend/js/mail-script.js')}}"></script>
   <script src="{{asset('frontend/js/theme.js')}}"></script>
+  <script src="{{asset('frontend/js/message.js')}}"></script>
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
+  <script src="https://js.stripe.com/v3/" defer></script>
 </body>
 
 </html>

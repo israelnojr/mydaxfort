@@ -3,7 +3,7 @@
 namespace Mydaxfort\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Mydaxfort\Review;
 class ProductReviewController extends Controller
 {
     /**
@@ -34,21 +34,19 @@ class ProductReviewController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'product_id' => ['required'],
-        //     'title' =>  ['required'],
-        //     'rating' => [ 'required'],
-        //     'review' => [ 'required']
-        // ]);
-        // return Review::create([
-        //     'user_id' => auth::id(),
-        //     'product_id' => $request['product_id'],
-        //     'title' => $request['title'],
-        //     'rating' => $request['rating'],
-        //     'review' => $request['review'],
-        // ])->redirect()->route('product.show');
-
-        auth()->user()->review()->create($request->all());
+        $this->validate($request, [
+            'product_id' => ['required'],
+            'title' =>  ['required'],
+            'rating' => [ 'required'],
+            'review' => [ 'required']
+        ]);
+        $review = new Review;
+        $review->product_id = $request->input('product_id');
+        $review->title = $request->input('title');
+        $review->rating = $request->input('rating');
+        $review->review = $request->input('review');
+        auth()->user()->review()->save($review);
+        // $request->session()->flash('status', 'Review added successfully');
         return back();
     }
 

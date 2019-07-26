@@ -86,12 +86,19 @@ class ProductController extends Controller
             'long_desc' => [ 'required', 'string', 'max:500','min:10'],
             'price' => ['required'],
         ]);
+        
+        $currentImage = $product->image;
 
-           if($request->image){
+           if($request->image != $currentImage ){
                 $fileName = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
                 Image::make($request->image)->save(public_path('images/product/'). $fileName);
 
                 $request->merge(['image' => $fileName]);
+
+                $productImage = public_path('images/product/').$currentImage;
+                if(file_exists( $productImage)){
+                    @unlink( $productImage);
+                }
            }
    
         $product->update($request->all());

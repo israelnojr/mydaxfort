@@ -46,6 +46,7 @@
           <div class="collapse navbar-collapse offset w-100" id="navbarSupportedContent">
             <div class="row w-100 mr-0">
               <div class="col-lg-7 pr-0">
+              @include('frontend.message')
                 <ul class="nav navbar-nav center_nav pull-right">
                   <li class="nav-item active">
                     <a class="nav-link" href="{{('/')}}">Home</a>
