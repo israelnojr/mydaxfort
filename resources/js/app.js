@@ -6,6 +6,7 @@ import { Form, HasError, AlertError } from 'vform';
 import moment from 'moment';
 import VueRouter from 'vue-router';
 import StarRating from 'vue-star-rating';
+import Gate from "./gate";
 
 const toast = swal.mixin({
   toast: true,
@@ -25,7 +26,7 @@ Vue.use(VueRouter)
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 Vue.component('star-rating', StarRating);
-
+Vue.prototype.$gate = new Gate(window.user);
 Vue.use(VueProgressBar, {
   color: 'rgb(143, 255, 199)',
   failedColor: 'red',
@@ -97,6 +98,10 @@ Vue.component(
   require('./components/passport/PersonalAccessTokens.vue').default
 );
 
+Vue.component(
+  'not-found',
+  require('./components/notFound.vue').default
+);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('review-form', require('./components/ReviewForm.vue').default);

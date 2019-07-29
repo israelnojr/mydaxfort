@@ -26,6 +26,7 @@ class CheckoutController extends Controller
 
     public function loadOrders()
     {
+        $this->authorize('isAdmin');
         return Checkout::all();
     }
 

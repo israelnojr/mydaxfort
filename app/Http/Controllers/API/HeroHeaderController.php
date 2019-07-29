@@ -17,6 +17,7 @@ class HeroHeaderController extends Controller
      */
     public function index()
     {
+        $this->authorize('isAdmin');
         return HeroHeader::all();
     }
 
@@ -28,6 +29,7 @@ class HeroHeaderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('isAdmin');
         $this->validate($request, [
             'category_id' => ['required'],
             'title' =>  ['required', 'string'],
@@ -67,6 +69,7 @@ class HeroHeaderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('isAdmin');
         $hero = HeroHeader::findOrFail($id);
         $this->validate($request, [
             'category_id' => ['required'],
@@ -93,6 +96,7 @@ class HeroHeaderController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $hero = HeroHeader::findOrFail($id);
         $hero->delete();
         return ['message' => 'HeroHeader Deleted'];

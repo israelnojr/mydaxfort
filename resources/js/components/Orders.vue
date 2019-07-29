@@ -190,7 +190,9 @@
             },
 
             loadOrders(){
-                axios.get("/orders").then(({ data })=> (this.orders = data));
+                // if(this.$gate.isAdmin()){
+                    axios.get("/orders").then(({ data })=> (this.orders = data));
+                // }
             },
 
             createUser(){
@@ -212,9 +214,11 @@
             }
         },
         created(){
-            this.loadOrders();
-            // Fire.$on('afterCreated', () => { this.loadOrders(); })
-            setInterval(() => this.loadOrders(), 3000);
+            // if(this.$gate.isAdmin()){
+                this.loadOrders();
+                // Fire.$on('afterCreated', () => { this.loadOrders(); })
+                setInterval(() => this.loadOrders(), 3000);
+            // }
         }
     }
 </script>

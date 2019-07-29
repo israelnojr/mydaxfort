@@ -3,9 +3,10 @@
 namespace Mydaxfort\Http\Controllers\Auth;
 
 use Mydaxfort\User;
-use Mydaxfort\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Mydaxfort\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -28,7 +29,15 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/';
+    // protected function redirectTo()
+    // {
+    //     if(Auth::user()->type == 'user'){
+    //         $redirectTo = '/profile';
+    //     }else{
+    //         $redirectTo = '/dashboard';
+    //     }
+    // }
 
     /**
      * Create a new controller instance.

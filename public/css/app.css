@@ -6646,6 +6646,23 @@ hr {
 }
 @charset "UTF-8";
 
+.productImage {
+  width: 5rem;
+  height: 5rem;
+}
+
+.notfound {
+  position: relative;
+  top: 54px;
+  left: 276px;
+  font-size: 2rem;
+}
+
+.notfoundImg {
+  bottom: 50px;
+  position: relative;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

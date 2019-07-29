@@ -15,7 +15,6 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper" id="app">
-
   <header class="main-header">
     <!-- Logo -->
     <a href="{{('/')}}" class="logo">
@@ -43,13 +42,11 @@
                 <!-- User image -->
                 <li class="user-header" style="margin-top: -1px;">
                   <img src="{{asset('images/adminlte.jpg')}}" class="rounded-circle" alt="User Image">
-
                   <p>
                     {{Auth::user()->name}} -  {{Auth::user()->type}}
                     <small>Member since {{Auth::user()->created_at->toFormattedDateString()}}</small>
                   </p>
-                </li>
-              
+                </li>         
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="float-left">
@@ -66,7 +63,6 @@
                 </li>
               </ul>
             </li>
-      
           </ul>
       </div>
     </nav>
@@ -75,6 +71,7 @@
   <!-- =============================================== -->
 
   <!-- Left side column. contains the sidebar -->
+@if(Auth::user()->type == 'admin' or Auth::user()->type == 'developer')
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -104,7 +101,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        
+      @can('isAdmin')
         <li class="">
           <router-link to="/dashboard">
             <i class="fa fa-th"></i> <span>Dashboard</span>
@@ -163,7 +160,9 @@
               </span>
           </router-link>
         </li>
-
+  
+  @endcan
+  @can('isDeveloper')
         <li class="">
           <router-link to="/developer">
             <i class="fab fa-connectdevelop"></i> <span>Developer</span>
@@ -172,14 +171,13 @@
               </span>
           </router-link>
         </li> 
-
+  @endcan
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
-
   <!-- =============================================== -->
-
+  @endif
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 
@@ -194,7 +192,6 @@
     
   </div>
   <!-- /.content-wrapper -->
-
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
      
@@ -207,7 +204,11 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+@auth
+  <script>
+    window.user = @jason(auth()->user())
+  </script>
+@endauth
 <script src="{{asset('js/app.js')}}"></script>
 
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->

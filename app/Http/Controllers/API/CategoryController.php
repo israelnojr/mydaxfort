@@ -16,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-      return  Category::all();
+        $this->authorize('isAdmin');
+        return  Category::all();
     }
 
     /**
@@ -27,6 +28,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('isAdmin');
         $this->validate($request, [
             'name' =>  ['required', 'string', 'unique:categories'],
             'desc' => [ 'required', 'string', 'max:50'],
@@ -63,6 +65,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('isAdmin');
         $category = Category::findOrFail($id);
         $this->validate($request, [
             'name' => [ 'required', 'max:191', 'unique:categories,name,'.$category->id],
@@ -81,6 +84,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $category = Category::findOrFail($id);
         $category->delete();
         return ['message' => 'Category Deleted'];

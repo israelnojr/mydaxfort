@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         // $authUser =  auth('api')->user();
+        $this->authorize('isAdmin');
         return Product::all();
     }
 
@@ -77,6 +79,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('isAdmin');
         $product = Product::findOrFail($id);
         $this->validate($request, [
             'category_id' => ['required'],
@@ -113,6 +116,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $product = Product::findOrFail($id);
         $product->delete();
         return ['message' => 'Product Deleted'];

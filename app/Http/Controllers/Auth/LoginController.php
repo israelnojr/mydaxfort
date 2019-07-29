@@ -2,6 +2,7 @@
 
 namespace Mydaxfort\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Mydaxfort\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -25,7 +26,15 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/';
+    // protected function redirectTo()
+    // {
+    //     if(Auth::user()->type == 'admin'){
+    //         $redirectTo = '/profile';
+    //     }else{
+    //         $redirectTo = '/dashboard';
+    //     }
+    // }
 
     /**
      * Create a new controller instance.

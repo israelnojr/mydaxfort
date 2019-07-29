@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('isAdmin');
         return User::all(); //latest()->paginate(5);
     }
 
@@ -26,7 +27,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   $this->validate($request, [
+    {   $this->authorize('isAdmin');
+        $this->validate($request, [
         'name' =>  ['required', 'string'],
         'email' => [ 'required', 'email', 'unique:users'],
         'type' =>  ['required'],
@@ -61,6 +63,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('isAdmin');
         $user = User::findOrFail($id);
         $this->validate($request, [
             'name' =>  ['required', 'string', 'max:191'],
@@ -81,6 +84,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'User Deleted'];

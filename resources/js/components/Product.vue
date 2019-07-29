@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <div class="row mt-5">
+            <!-- v-if="$gate.isAdmin()" -->
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex align-item-center justify-content-between">
@@ -19,9 +20,9 @@
                             <th>User Name</th>
                             <th>Name</th>
                             <th>Short Description</th>
-                            <th>Status</th>
+                            <!-- <th>Status</th> -->
                             <th>Price</th>
-                            <!-- <th>Image</th> -->
+                            <th>Image</th>
                             <th>Registered At</th>
                             <th>Modify</th>
                         </tr>
@@ -31,9 +32,9 @@
                             <td>{{product.username}}</td>
                             <td>{{product.name | upText}}</td>
                             <td>{{product.short_desc}}</td>
-                            <td>{{product.status}}</td>
+                            <!-- <td>{{product.status}}</td> -->
                             <td>{{product.price}}</td>
-                            <!-- <td><img src="images/product/{{product.image}}"></td> -->
+                            <td><img class="productImage" :src="getProductImage()"></td>
                             <td>{{product.created_at | myDate}}</td>
                             <td>
                                 <a class="btn btn-info" href="#" @click="editModal(product)">
@@ -50,6 +51,9 @@
             </div>
         </div>
     </div>
+ </div>
+ <div>
+     <not-found></not-found>
  </div>
 <!-- Modal -->
         <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="AddNewLabel" aria-hidden="true">
@@ -139,6 +143,9 @@
             }
         },
         methods: {
+            getProductImage(){
+                return 'images/product/'+this.form.image;
+            },
             updateProduct(){
                 this.$Progress.start()
                 this.form.put('api/product/'+this.form.id)
@@ -158,8 +165,6 @@
                 .catch(() => {
                    this.$Progress.fail()
                 })
-
-                // alert('Edit data')
             },
 
             editModal(product){
@@ -202,11 +207,15 @@
             },
 
             loadProduct(){
-                axios.get("api/product").then(({ data })=> (this.products = data));
+                // if(this.$gate.isAdmin){
+                    axios.get("api/product").then(({ data })=> (this.products = data));
+                // }
             },
 
              loadCategory(){
-                axios.get("api/category").then(({ data })=> (this.categories = data));
+                //  if(this.$gate.isAdmin()){
+                    axios.get("api/category").then(({ data })=> (this.categories = data));
+                //  }
             },
 
             imgUpload(e){
@@ -250,9 +259,10 @@
 
         },
             created(){
-            this.loadProduct();
-            // Fire.$on('afterCreated', () => { this.loadUsers(); })
-            setInterval(() => this.loadProduct(), 3000);
+            // if(this.$gate.isAdmin()){
+                this.loadProduct();
+                setInterval(() => this.loadProduct(), 3000);
+            // }
         }
     }
 </script>
