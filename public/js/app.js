@@ -1952,6 +1952,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2016,10 +2019,12 @@ __webpack_require__.r(__webpack_exports__);
     loadCategory: function loadCategory() {
       var _this3 = this;
 
-      axios.get("api/category").then(function (_ref) {
-        var data = _ref.data;
-        return _this3.categories = data;
-      });
+      if (this.$gate.isAdmin()) {
+        axios.get("api/category").then(function (_ref) {
+          var data = _ref.data;
+          return _this3.categories = data;
+        });
+      }
     },
     createCategory: function createCategory() {
       var _this4 = this;
@@ -2042,11 +2047,13 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this5 = this;
 
-    this.loadCategory(); // Fire.$on('afterCreated', () => { this.loadUsers(); })
+    if (this.$gate.isAdmin()) {
+      this.loadCategory(); // Fire.$on('afterCreated', () => { this.loadUsers(); })
 
-    setInterval(function () {
-      return _this5.loadCategory();
-    }, 3000);
+      setInterval(function () {
+        return _this5.loadCategory();
+      }, 3000);
+    }
   }
 });
 
@@ -2086,6 +2093,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -2148,6 +2158,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -2321,18 +2334,22 @@ __webpack_require__.r(__webpack_exports__);
     loadHeroHeader: function loadHeroHeader() {
       var _this3 = this;
 
-      axios.get("api/hero").then(function (_ref) {
-        var data = _ref.data;
-        return _this3.heros = data;
-      });
+      if (this.$gate.isAdmin()) {
+        axios.get("api/hero").then(function (_ref) {
+          var data = _ref.data;
+          return _this3.heros = data;
+        });
+      }
     },
     loadCategory: function loadCategory() {
       var _this4 = this;
 
-      axios.get("api/category").then(function (_ref2) {
-        var data = _ref2.data;
-        return _this4.categories = data;
-      });
+      if (this.$gate.isAdmin()) {
+        axios.get("api/category").then(function (_ref2) {
+          var data = _ref2.data;
+          return _this4.categories = data;
+        });
+      }
     },
     imgUpload: function imgUpload(e) {
       var _this5 = this;
@@ -2373,11 +2390,13 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this7 = this;
 
-    this.loadHeroHeader(); // Fire.$on('afterCreated', () => { this.loadUsers(); })
+    if (this.$gate.isAdmin()) {
+      this.loadHeroHeader(); // Fire.$on('afterCreated', () => { this.loadUsers(); })
 
-    setInterval(function () {
-      return _this7.loadHeroHeader();
-    }, 3000);
+      setInterval(function () {
+        return _this7.loadHeroHeader();
+      }, 3000);
+    }
   }
 });
 
@@ -2392,6 +2411,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -2520,65 +2542,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateUser: function updateUser() {
+    loadOrders: function loadOrders() {
       var _this = this;
 
-      this.$Progress.start();
-      this.form.put('api/user/' + this.form.id).then(function () {
-        // hide modal
-        $('#AddNew').modal('hide'); // show success message
-
-        swal.fire('Updated!', 'User details updated successfully', 'success');
-
-        _this.$Progress.finish();
-      })["catch"](function () {
-        _this.$Progress.fail();
-      }); // alert('Edit data')
-    },
-    editModal: function editModal(user) {
-      this.editMode = true;
-      this.form.reset();
-      $('#AddNew').modal('show');
-      this.form.fill(user);
-    },
-    createModal: function createModal() {
-      this.editMode = false;
-      this.form.reset();
-      $('#AddNew').modal('show');
-    },
-    deleteUser: function deleteUser(id) {
-      var _this2 = this;
-
-      swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(function (result) {
-        //send request to the server
-        if (result.value) {
-          _this2.form["delete"]('api/user/' + id).then(function () {
-            swal.fire('Deleted!', 'User deleted.', 'success');
-          })["catch"](function () {
-            swal("Failed!", "There was something wronge.", "warning");
-          });
-        }
-      });
-    },
-    loadOrders: function loadOrders() {
-      var _this3 = this;
-
-      // if(this.$gate.isAdmin()){
-      axios.get("/orders").then(function (_ref) {
-        var data = _ref.data;
-        return _this3.orders = data;
-      }); // }
+      if (this.$gate.isAdmin()) {
+        axios.get("/orders").then(function (_ref) {
+          var data = _ref.data;
+          return _this.orders = data;
+        });
+      }
     },
     createUser: function createUser() {
-      var _this4 = this;
+      var _this2 = this;
 
       this.$Progress.start();
       this.form.post('api/user').then(function () {
@@ -2589,19 +2564,20 @@ __webpack_require__.r(__webpack_exports__);
           title: 'User Created Successfully'
         });
 
-        _this4.$Progress.finish();
+        _this2.$Progress.finish();
       })["catch"](function () {});
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this3 = this;
 
-    // if(this.$gate.isAdmin()){
-    this.loadOrders(); // Fire.$on('afterCreated', () => { this.loadOrders(); })
+    if (this.$gate.isAdmin()) {
+      this.loadOrders(); // Fire.$on('afterCreated', () => { this.loadOrders(); })
 
-    setInterval(function () {
-      return _this5.loadOrders();
-    }, 3000); // }
+      setInterval(function () {
+        return _this3.loadOrders();
+      }, 3000);
+    }
   }
 });
 
@@ -2616,7 +2592,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2814,20 +2789,22 @@ __webpack_require__.r(__webpack_exports__);
     loadProduct: function loadProduct() {
       var _this3 = this;
 
-      // if(this.$gate.isAdmin){
-      axios.get("api/product").then(function (_ref) {
-        var data = _ref.data;
-        return _this3.products = data;
-      }); // }
+      if (this.$gate.isAdmin()) {
+        axios.get("api/product").then(function (_ref) {
+          var data = _ref.data;
+          return _this3.products = data;
+        });
+      }
     },
     loadCategory: function loadCategory() {
       var _this4 = this;
 
-      //  if(this.$gate.isAdmin()){
-      axios.get("api/category").then(function (_ref2) {
-        var data = _ref2.data;
-        return _this4.categories = data;
-      }); //  }
+      if (this.$gate.isAdmin()) {
+        axios.get("api/category").then(function (_ref2) {
+          var data = _ref2.data;
+          return _this4.categories = data;
+        });
+      }
     },
     imgUpload: function imgUpload(e) {
       var _this5 = this;
@@ -2868,11 +2845,12 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this7 = this;
 
-    // if(this.$gate.isAdmin()){
-    this.loadProduct();
-    setInterval(function () {
-      return _this7.loadProduct();
-    }, 3000); // }
+    if (this.$gate.isAdmin()) {
+      this.loadProduct();
+      setInterval(function () {
+        return _this7.loadProduct();
+      }, 3000);
+    }
   }
 });
 
@@ -3485,6 +3463,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3551,10 +3532,12 @@ __webpack_require__.r(__webpack_exports__);
     loadUsers: function loadUsers() {
       var _this3 = this;
 
-      axios.get("api/user").then(function (_ref) {
-        var data = _ref.data;
-        return _this3.users = data;
-      });
+      if (this.$gate.isAdmin()) {
+        axios.get("api/user").then(function (_ref) {
+          var data = _ref.data;
+          return _this3.users = data;
+        });
+      }
     },
     createUser: function createUser() {
       var _this4 = this;
@@ -3575,11 +3558,13 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this5 = this;
 
-    this.loadUsers(); // Fire.$on('afterCreated', () => { this.loadUsers(); })
+    if (this.$gate.isAdmin()) {
+      this.loadUsers(); // Fire.$on('afterCreated', () => { this.loadUsers(); })
 
-    setInterval(function () {
-      return _this5.loadUsers();
-    }, 3000);
+      setInterval(function () {
+        return _this5.loadUsers();
+      }, 3000);
+    }
   }
 });
 
@@ -61851,102 +61836,110 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header d-flex align-item-center justify-content-between"
-            },
-            [
-              _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-tools float-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    on: { click: _vm.createModal }
-                  },
-                  [
-                    _vm._v("Add New "),
-                    _c("i", { staticClass: "fas fa-user-plus fa-fw" })
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
               _c(
-                "tbody",
+                "div",
+                {
+                  staticClass:
+                    "card-header d-flex align-item-center justify-content-between"
+                },
                 [
-                  _vm._m(0),
+                  _c("h3", { staticClass: "card-title" }, [
+                    _vm._v("Users Table")
+                  ]),
                   _vm._v(" "),
-                  _vm._l(_vm.categories, function(category) {
-                    return _c("tr", { key: category.id }, [
-                      _c("td", [_vm._v(_vm._s(category.id))]),
+                  _c("div", { staticClass: "card-tools float-right" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: { click: _vm.createModal }
+                      },
+                      [
+                        _vm._v("Add New "),
+                        _c("i", { staticClass: "fas fa-user-plus fa-fw" })
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(category.name)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(category.username)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(category.slug))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(category.desc))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(category.status))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("myDate")(category.created_at)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-info",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editModal(category)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit blue" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteCategory(category.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash red" })]
-                        )
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
+                      _vm._l(_vm.categories, function(category) {
+                        return _c("tr", { key: category.id }, [
+                          _c("td", [_vm._v(_vm._s(category.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(category.name)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(category.username)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(category.slug))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(category.desc))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(category.status))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(_vm._f("myDate")(category.created_at))
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-info",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(category)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteCategory(category.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            )
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
             ])
           ])
         ])
-      ])
-    ]),
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -62242,20 +62235,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [
-          _c("passport-clients"),
-          _vm._v(" "),
-          _c("passport-authorized-clients"),
-          _vm._v(" "),
-          _c("passport-personal-access-tokens")
-        ],
-        1
-      )
-    ])
+    _vm.$gate.isDeveloper()
+      ? _c("div", { staticClass: "row justify-content-center" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [
+              _c("passport-clients"),
+              _vm._v(" "),
+              _c("passport-authorized-clients"),
+              _vm._v(" "),
+              _c("passport-personal-access-tokens")
+            ],
+            1
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isDeveloper() ? _c("div", [_c("not-found")], 1) : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -62328,98 +62325,104 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header d-flex align-item-center justify-content-between"
-            },
-            [
-              _c("h3", { staticClass: "card-title" }, [
-                _vm._v("HeroHeader Table")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-tools float-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    on: { click: _vm.createModal }
-                  },
-                  [
-                    _vm._v("Add New "),
-                    _c("i", { staticClass: "fas fa-user-plus fa-fw" })
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
               _c(
-                "tbody",
+                "div",
+                {
+                  staticClass:
+                    "card-header d-flex align-item-center justify-content-between"
+                },
                 [
-                  _vm._m(0),
+                  _c("h3", { staticClass: "card-title" }, [
+                    _vm._v("HeroHeader Table")
+                  ]),
                   _vm._v(" "),
-                  _vm._l(_vm.heros, function(hero) {
-                    return _c("tr", { key: hero.id }, [
-                      _c("td", [_vm._v(_vm._s(hero.id))]),
+                  _c("div", { staticClass: "card-tools float-right" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: { click: _vm.createModal }
+                      },
+                      [
+                        _vm._v("Add New "),
+                        _c("i", { staticClass: "fas fa-user-plus fa-fw" })
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(hero.username))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(hero.title)))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(hero.short_desc))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(hero.status))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("myDate")(hero.created_at)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-info",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editModal(hero)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit blue" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteHeroHeader(hero.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash red" })]
-                        )
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
+                      _vm._l(_vm.heros, function(hero) {
+                        return _c("tr", { key: hero.id }, [
+                          _c("td", [_vm._v(_vm._s(hero.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(hero.username))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(hero.title)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(hero.short_desc))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(hero.status))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("myDate")(hero.created_at)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-info",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(hero)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteHeroHeader(hero.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            )
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
             ])
           ])
         ])
-      ])
-    ]),
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -62779,61 +62782,69 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _c(
-                "tbody",
-                [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _vm._l(_vm.orders, function(order) {
-                    return _c("tr", { key: order.id }, [
-                      _c("td", [_vm._v(_vm._s(order.id))]),
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(1),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(order.first_name)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(order.last_name)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(order.number)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(order.email))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(order.country)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(order.address)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(order.city)))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(order.terms)))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("myDate")(order.created_at)))
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
+                      _vm._l(_vm.orders, function(order) {
+                        return _c("tr", { key: order.id }, [
+                          _c("td", [_vm._v(_vm._s(order.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(order.first_name)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(order.last_name)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(order.number)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(order.email))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(order.country)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(order.address)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(order.city)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(order.terms)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("myDate")(order.created_at)))
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
             ])
           ])
         ])
-      ])
-    ]),
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -63230,109 +63241,111 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header d-flex align-item-center justify-content-between"
-            },
-            [
-              _c("h3", { staticClass: "card-title" }, [
-                _vm._v("Products Table")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-tools float-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    on: { click: _vm.createModal }
-                  },
-                  [
-                    _vm._v("Add New "),
-                    _c("i", { staticClass: "fas fa-user-plus fa-fw" })
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
               _c(
-                "tbody",
+                "div",
+                {
+                  staticClass:
+                    "card-header d-flex align-item-center justify-content-between"
+                },
                 [
-                  _vm._m(0),
+                  _c("h3", { staticClass: "card-title" }, [
+                    _vm._v("Products Table")
+                  ]),
                   _vm._v(" "),
-                  _vm._l(_vm.products, function(product) {
-                    return _c("tr", { key: product.id }, [
-                      _c("td", [_vm._v(_vm._s(product.id))]),
+                  _c("div", { staticClass: "card-tools float-right" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: { click: _vm.createModal }
+                      },
+                      [
+                        _vm._v("Add New "),
+                        _c("i", { staticClass: "fas fa-user-plus fa-fw" })
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(product.username))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("upText")(product.name)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(product.short_desc))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(product.price))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("img", {
-                          staticClass: "productImage",
-                          attrs: { src: _vm.getProductImage() }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("myDate")(product.created_at)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-info",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editModal(product)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit blue" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteProduct(product.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash red" })]
-                        )
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
+                      _vm._l(_vm.products, function(product) {
+                        return _c("tr", { key: product.id }, [
+                          _c("td", [_vm._v(_vm._s(product.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(product.username))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(product.name)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(product.short_desc))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(product.price))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("img", {
+                              staticClass: "productImage",
+                              attrs: { src: _vm.getProductImage() }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("myDate")(product.created_at)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-info",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(product)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteProduct(product.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            )
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
             ])
           ])
         ])
-      ])
-    ]),
+      : _vm._e(),
     _vm._v(" "),
-    _c("div", [_c("not-found")], 1),
+    !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -64692,94 +64705,104 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header d-flex align-item-center justify-content-between"
-            },
-            [
-              _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-tools float-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    on: { click: _vm.createModal }
-                  },
-                  [
-                    _vm._v("Add New "),
-                    _c("i", { staticClass: "fas fa-user-plus fa-fw" })
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
               _c(
-                "tbody",
+                "div",
+                {
+                  staticClass:
+                    "card-header d-flex align-item-center justify-content-between"
+                },
                 [
-                  _vm._m(0),
+                  _c("h3", { staticClass: "card-title" }, [
+                    _vm._v("Users Table")
+                  ]),
                   _vm._v(" "),
-                  _vm._l(_vm.users, function(user) {
-                    return _c("tr", { key: user.id }, [
-                      _c("td", [_vm._v(_vm._s(user.id))]),
+                  _c("div", { staticClass: "card-tools float-right" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: { click: _vm.createModal }
+                      },
+                      [
+                        _vm._v("Add New "),
+                        _c("i", { staticClass: "fas fa-user-plus fa-fw" })
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(user.name)))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(user.email))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(user.type)))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("myDate")(user.created_at)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-info",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editModal(user)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit blue" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteUser(user.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash red" })]
-                        )
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
+                      _vm._l(_vm.users, function(user) {
+                        return _c("tr", { key: user.id }, [
+                          _c("td", [_vm._v(_vm._s(user.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(user.name)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(user.email))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(user.type)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("myDate")(user.created_at)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-info",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(user)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteUser(user.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            )
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
             ])
           ])
         ])
-      ])
-    ]),
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
     _vm._v(" "),
     _c(
       "div",

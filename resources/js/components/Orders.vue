@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-5">
+        <div class="row mt-5" v-if="$gate.isAdmin()">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex align-item-center justify-content-between">
@@ -54,6 +54,9 @@
             </div>
         </div>
     </div>
+ </div>
+ <div  v-if="!$gate.isAdmin()">
+     <not-found></not-found>
  </div>
 <!-- Modal -->
         <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="AddNewLabel" aria-hidden="true">
@@ -127,72 +130,11 @@
             }
         },
         methods: {
-            updateUser(){
-                this.$Progress.start()
-                this.form.put('api/user/'+this.form.id)
-
-                .then(() => {
-                    // hide modal
-                    $('#AddNew').modal('hide')
-                    // show success message
-                    swal.fire(
-                    'Updated!',
-                    'User details updated successfully',
-                    'success'
-                    )  
-                     this.$Progress.finish()
-                })
-
-                .catch(() => {
-                   this.$Progress.fail()
-                })
-
-                // alert('Edit data')
-            },
-
-            editModal(user){
-                this.editMode = true;
-                this.form.reset();
-                $('#AddNew').modal('show')
-                this.form.fill(user);
-            },
-
-            createModal(){
-                 this.editMode = false;
-                this.form.reset();
-                $('#AddNew').modal('show')
-            },
-
-            deleteUser(id){
-                swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-
-                    //send request to the server
-                    if (result.value) {
-                        this.form.delete('api/user/'+id).then(() => {                     
-                            swal.fire(
-                            'Deleted!',
-                            'User deleted.',
-                            'success'
-                            )                     
-                        }).catch(()=>{
-                            swal("Failed!", "There was something wronge.", "warning");
-                        })
-                    }
-                })
-            },
-
+            
             loadOrders(){
-                // if(this.$gate.isAdmin()){
+                if(this.$gate.isAdmin()){
                     axios.get("/orders").then(({ data })=> (this.orders = data));
-                // }
+                }
             },
 
             createUser(){
@@ -214,11 +156,11 @@
             }
         },
         created(){
-            // if(this.$gate.isAdmin()){
+            if(this.$gate.isAdmin()){
                 this.loadOrders();
                 // Fire.$on('afterCreated', () => { this.loadOrders(); })
                 setInterval(() => this.loadOrders(), 3000);
-            // }
+            }
         }
     }
 </script>

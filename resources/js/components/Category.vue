@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-5">
+        <div class="row mt-5" v-if="$gate.isAdmin()">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex align-item-center justify-content-between">
@@ -48,6 +48,9 @@
             </div>
         </div>
     </div>
+ </div>
+ <div  v-if="!$gate.isAdmin()">
+     <not-found></not-found>
  </div>
 <!-- Modal -->
         <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="AddNewLabel" aria-hidden="true">
@@ -166,7 +169,9 @@
             },
 
             loadCategory(){
-                axios.get("api/category").then(({ data })=> (this.categories = data));
+                if(this.$gate.isAdmin()){
+                    axios.get("api/category").then(({ data })=> (this.categories = data));
+                }
             },
 
             createCategory(){
@@ -188,9 +193,11 @@
             }
         },
         created(){
-            this.loadCategory();
-            // Fire.$on('afterCreated', () => { this.loadUsers(); })
-            setInterval(() => this.loadCategory(), 3000);
+            if(this.$gate.isAdmin()){
+                this.loadCategory();
+                // Fire.$on('afterCreated', () => { this.loadUsers(); })
+                setInterval(() => this.loadCategory(), 3000);
+            }
         }
     }
 </script>

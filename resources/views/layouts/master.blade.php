@@ -206,7 +206,7 @@
 <!-- ./wrapper -->
 @auth
   <script>
-    window.user = @jason(auth()->user())
+    window.user = @json(auth()->user())
   </script>
 @endauth
 <script src="{{asset('js/app.js')}}"></script>

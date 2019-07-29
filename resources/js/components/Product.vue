@@ -1,7 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-5">
-            <!-- v-if="$gate.isAdmin()" -->
+        <div class="row mt-5" v-if="$gate.isAdmin()">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex align-item-center justify-content-between">
@@ -52,9 +51,9 @@
         </div>
     </div>
  </div>
- <!-- <div>
+ <div  v-if="!$gate.isAdmin()">
      <not-found></not-found>
- </div> -->
+ </div>
 <!-- Modal -->
         <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="AddNewLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -207,15 +206,15 @@
             },
 
             loadProduct(){
-                // if(this.$gate.isAdmin){
+                if(this.$gate.isAdmin()){
                     axios.get("api/product").then(({ data })=> (this.products = data));
-                // }
+                }
             },
 
              loadCategory(){
-                //  if(this.$gate.isAdmin()){
+                 if(this.$gate.isAdmin()){
                     axios.get("api/category").then(({ data })=> (this.categories = data));
-                //  }
+                 }
             },
 
             imgUpload(e){
@@ -259,10 +258,10 @@
 
         },
             created(){
-            // if(this.$gate.isAdmin()){
+            if(this.$gate.isAdmin()){
                 this.loadProduct();
                 setInterval(() => this.loadProduct(), 3000);
-            // }
+            }
         }
     }
 </script>
