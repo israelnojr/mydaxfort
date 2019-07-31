@@ -136,7 +136,8 @@
                     'Updated!',
                     'HeroHeader details updated successfully',
                     'success'
-                    )  
+                    )
+                    location.reload();  
                      this.$Progress.finish()
                 })
 
@@ -178,7 +179,8 @@
                             'Deleted!',
                             'HeroHeader deleted.',
                             'success'
-                            )                     
+                            )
+                        location.reload();                     
                         }).catch(()=>{
                             swal("Failed!", "There was something wronge.", "warning");
                         })
@@ -231,6 +233,7 @@
                     title: 'HeroHeader Created Successfully'
                     })
                 this.$Progress.finish()
+                location.reload();
                 })
                 .catch(() =>{
                      this.$Progress.fail()
@@ -242,7 +245,7 @@
             if(this.$gate.isAdmin()){
                 this.loadHeroHeader();
                 // Fire.$on('afterCreated', () => { this.loadUsers(); })
-                setInterval(() => this.loadHeroHeader(), 3000);
+                // setInterval(() => this.loadHeroHeader(), 3000);
             }
         }
     }

@@ -134,6 +134,7 @@
                     'success'
                     )  
                      this.$Progress.finish()
+                     location.reload();
                 })
 
                 .catch(() => {
@@ -174,7 +175,8 @@
                             'Deleted!',
                             'User deleted.',
                             'success'
-                            )                     
+                            ) 
+                        location.reload();                    
                         }).catch(()=>{
                             swal("Failed!", "There was something wronge.", "warning");
                         })
@@ -200,6 +202,7 @@
                     title: 'User Created Successfully'
                     })
                 this.$Progress.finish()
+                location.reload();
                 })
                 .catch(() =>{
 
@@ -210,7 +213,7 @@
             if(this.$gate.isAdmin()){
                 this.loadUsers();
                 // Fire.$on('afterCreated', () => { this.loadUsers(); })
-                setInterval(() => this.loadUsers(), 3000);
+                // setInterval(() => this.loadUsers(), 3000);
             }
         }
     }

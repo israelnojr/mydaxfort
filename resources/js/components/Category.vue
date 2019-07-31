@@ -120,6 +120,7 @@
                     'success'
                     )  
                      this.$Progress.finish()
+                     location.reload();
                 })
 
                 .catch(() => {
@@ -160,7 +161,8 @@
                             'Deleted!',
                             'category deleted.',
                             'success'
-                            )                     
+                            )    
+                        location.reload();                 
                         }).catch(()=>{
                             swal("Failed!", "There was something wronge.", "warning");
                         })
@@ -186,6 +188,7 @@
                     title: 'Category Created Successfully'
                     })
                 this.$Progress.finish()
+                location.reload();
                 })
                 .catch(() =>{
                      this.$Progress.fail()
@@ -196,7 +199,7 @@
             if(this.$gate.isAdmin()){
                 this.loadCategory();
                 // Fire.$on('afterCreated', () => { this.loadUsers(); })
-                setInterval(() => this.loadCategory(), 3000);
+                // setInterval(() => this.loadCategory(), 3000);
             }
         }
     }

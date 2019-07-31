@@ -105,6 +105,7 @@ Vue.component(
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('review-form', require('./components/ReviewForm.vue').default);
+Vue.component('errorMessage', require('./components/errorMessage.vue').default);
 
 
 const app = new Vue({

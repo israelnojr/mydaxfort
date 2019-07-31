@@ -54,6 +54,9 @@
  <div  v-if="!$gate.isAdmin()">
      <not-found></not-found>
  </div>
+  <!-- <div v-if="errors.length > 0">
+      <errorMessage></errorMessage>
+  </div> -->
 <!-- Modal -->
         <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="AddNewLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -78,22 +81,24 @@
                             <div class="form-group">
                                 <input v-model="form.name" type="text" name="name"
                                     placeholder="Name"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                    class="form-control" :class="{ 'is-invalid' :form.errors.has('name') }">
                                 <has-error :form="form" field="name"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <textarea v-model="form.short_desc" type="text" name="short_desc"
                                     placeholder="Short Description"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }">
-                                <has-error :form="form" field="short_desc"></has-error></textarea>
+                                    class="form-control" :class="{ 'is-invalid' :form.errors.has('short_desc') }">
+                                    <has-error :form="form" field="short_desc"></has-error>
+                                </textarea>
                             </div>
 
                             <div class="form-group">
                                 <textarea v-model="form.long_desc" type="text" name="long_desc"
                                     placeholder="Long Description"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('long_desc') }">
-                                <has-error :form="form" field="long_desc"></has-error></textarea>
+                                    class="form-control" :class="{ 'is-invalid' :form.errors.has('long_desc') }">
+                                    <has-error :form="form" field="long_desc"></has-error>
+                                </textarea>
                             </div>
                 
                             <div class="form-group">
@@ -138,17 +143,19 @@
                     long_desc: '',
                     price: '',
                     image: ''
-                })
+                }),
+
             }
         },
         methods: {
             getProductImage(){
-                return 'images/product/'+this.form.image;
+                for(product in products){
+                    return 'images/product/'+this.form.image;
+                }
             },
             updateProduct(){
                 this.$Progress.start()
                 this.form.put('api/product/'+this.form.id)
-
                 .then(() => {
                     // hide modal
                     $('#AddNew').modal('hide')
@@ -159,10 +166,16 @@
                     'success'
                     )  
                      this.$Progress.finish()
+                     location.reload();
                 })
 
                 .catch(() => {
-                   this.$Progress.fail()
+                    this.$Progress.fail()
+                    // if(error.response.status == 422){
+                    //     this.errors.push('The product short description cannot be more than 50 worlds')
+                    // }else{
+                    //     this.errors.push('Something went wrong please refresh and try again')
+                    // }
                 })
             },
 
@@ -197,7 +210,8 @@
                             'Deleted!',
                             'Product deleted.',
                             'success'
-                            )                     
+                            ) 
+                        location.reload();                    
                         }).catch(()=>{
                             swal("Failed!", "There was something wronge.", "warning");
                         })
@@ -241,7 +255,6 @@
             createProduct(){
                 this.$Progress.start()
                 this.form.post('api/product')
-
                 .then(() =>{
                     // Fire.$emit('afterCreated');
                     $('#AddNew').modal('hide')
@@ -250,6 +263,7 @@
                     title: 'Product Created Successfully'
                     })
                 this.$Progress.finish()
+                location.reload();
                 })
                 .catch(() =>{
                      this.$Progress.fail()
@@ -260,7 +274,7 @@
             created(){
             if(this.$gate.isAdmin()){
                 this.loadProduct();
-                setInterval(() => this.loadProduct(), 3000);
+                // setInterval(() => this.loadProduct(), 3000);
             }
         }
     }
