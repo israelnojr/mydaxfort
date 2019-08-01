@@ -9,6 +9,11 @@
                 <a class="main_btn mt-40" href="{{route('category.index', ['category' => $banner->category->slug])}}">View Collection</a>
             </div>
         </div>
+        <style>
+            .home_banner_area {
+            background: url({{asset('images/heroHeader/'.$banner->image)}}) no-repeat center bottom;
+        }
+        </style>
     @endforeach
     </div>
 </div>

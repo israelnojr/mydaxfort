@@ -149,9 +149,9 @@
         },
         methods: {
             getProductImage(){
-                for(product in products){
-                    return 'images/product/'+this.form.image;
-                }
+                // for(product in products){
+                    return 'images/product/'+this.product.image;
+                // }
             },
             updateProduct(){
                 this.$Progress.start()

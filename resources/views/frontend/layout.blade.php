@@ -5,8 +5,8 @@
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="icon" href="{{asset('frontend/img/favicon.png')}}" type="image/png" />
-  <title>Eiser ecommerce</title>
+  <link rel="icon" href="{{asset('frontend/img/fevicon.png')}}" type="image/png" />
+  <title>Mydaxfort Marketplace</title>
 
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">

@@ -2740,9 +2740,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getProductImage: function getProductImage() {
-      for (product in products) {
-        return 'images/product/' + this.form.image;
-      }
+      // for(product in products){
+      return 'images/product/' + this.product.image; // }
     },
     updateProduct: function updateProduct() {
       var _this = this;
